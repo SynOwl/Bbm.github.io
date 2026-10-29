@@ -3334,34 +3334,26 @@ function buatSemuaThumbnail(){
 function renderVideoGlobal() {
     var list = document.getElementById('videoGlobalList');
     if(!list) return;
-    
     var html = '';
-    SEMUA_VIDEO_GALERI = []; 
-    
+    SEMUA_VIDEO_GALERI = [];
     if(typeof DAFTAR_VIDEO_TERMUX === 'undefined' || DAFTAR_VIDEO_TERMUX.length === 0) {
         list.innerHTML = '<div class="info" style="text-align:center; grid-column: span 2;">Data video belum dimuat / kosong.</div>';
         return;
     }
-
     for(var i=0; i<DAFTAR_VIDEO_TERMUX.length; i++) {
         var v = DAFTAR_VIDEO_TERMUX[i];
+        // Kartu feed sengaja tanpa caption/judul; hanya cuplikan video dan ikon putar.
         SEMUA_VIDEO_GALERI.push(v.video);
-        
-        html += '<div onclick="putarVideo(\'' + v.video + '\', \'' + captionVideo(v) + '\')" style="position:relative; aspect-ratio:9/16; border-radius:16px; overflow:hidden; background:#222; border:2px solid rgba(255,255,255,0.4); display:flex; flex-direction:column; justify-content:flex-end; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.4);">' +
-            '<img data-video-poster="' + v.video + '" alt="Cuplikan ' + amanTeks(v.judul) + '" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">' +
-            '<div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 40%, transparent 80%);"></div>' +
-            '<div style="position:relative; padding:15px 8px 12px; text-align:center; z-index:1;">' +
-                '<div style="font-size:14px; font-weight:900; color:#FFF; text-shadow:0 2px 4px rgba(0,0,0,1); margin-bottom:4px;">' + v.judul + '</div>' +
-                '<div style="font-size:11px; color:#FFF; font-weight:700; background:linear-gradient(135deg,#EC407A,#AB47BC); padding:3px 10px; border-radius:12px; display:inline-block; box-shadow:0 2px 5px rgba(0,0,0,0.5);">' + v.label + '</div>' +
-            '</div>' +
+        var amanSrc=String(v.video||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
+        var amanCaption=captionVideo(v).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\r?\n/g,' ');
+        html += '<div onclick="putarVideo(\'' + amanSrc + '\', \'' + amanCaption + '\')" aria-label="Putar video H2H" role="button" tabindex="0" style="position:relative; aspect-ratio:9/16; border-radius:16px; overflow:hidden; background:#222; border:2px solid rgba(255,255,255,0.4); cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.4);">' +
+            '<img data-video-poster="' + amanTeks(v.video) + '" alt="Cuplikan video H2H" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">' +
+            '<div aria-hidden="true" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(to top,rgba(0,0,0,.16),transparent 45%);"><span style="display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,.48);border:1px solid rgba(255,255,255,.8);color:#fff;font-size:22px;padding-left:3px;">▶</span></div>' +
         '</div>';
     }
     list.innerHTML = html;
-    // Thumbnail harus diproses setelah kartu galeri selesai dibuat.
-    // Dipanggil di sini agar tetap jalan setiap galeri dirender ulang.
     requestAnimationFrame(function(){ buatSemuaThumbnail(); });
 }
-
 
 // ===== LOGIKA SWIPE VIDEO (TIKTOK STYLE) =====
 var touchStartY = 0;
