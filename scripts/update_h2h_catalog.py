@@ -37,6 +37,16 @@ def main():
             "thumbnail": f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg",
             "source": "youtube-official"
         })
+    # Preserve already-seen uploads from this same month, because YouTube RSS only exposes recent uploads.
+    if OUT.exists():
+        try:
+            previous = json.loads(OUT.read_text(encoding="utf-8"))
+            if previous.get("month") == month:
+                known = {v.get("id"): v for v in previous.get("videos", []) if v.get("id")}
+                known.update({v["id"]: v for v in videos})
+                videos = list(known.values())
+        except (OSError, ValueError, TypeError):
+            pass
     videos.sort(key=lambda v: v["published"], reverse=True)
     payload = {
         "schemaVersion": 1, "month": month, "updatedAt": now.isoformat(),
