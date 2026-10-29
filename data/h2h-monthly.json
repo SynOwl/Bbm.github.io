@@ -8,21 +8,21 @@
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
     {
+      "id": "DK_dr_n2rM4",
+      "title": "Hearts2Hearts 하츠투하츠 'ICONIC HEART (Korean Ver.)' MV",
+      "type": "mv",
+      "published": "2026-10-18T18:00:26Z",
+      "url": "https://www.youtube.com/watch?v=DK_dr_n2rM4",
+      "thumbnail": "https://img.youtube.com/vi/DK_dr_n2rM4/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
       "id": "lu9GinsuyUQ",
       "title": "Hearts2Hearts 하츠투하츠 'Next Chapter' MV",
       "type": "mv",
       "published": "2026-10-16T09:00:00Z",
       "url": "https://www.youtube.com/watch?v=lu9GinsuyUQ",
       "thumbnail": "https://img.youtube.com/vi/lu9GinsuyUQ/hqdefault.jpg",
-      "source": "youtube-official"
-    },
-    {
-      "id": "chl0R8C4NJ8",
-      "title": "ICONIC HEART (Korean Ver.) MV",
-      "type": "mv",
-      "published": "2026-10-19T09:00:00Z",
-      "url": "https://www.youtube.com/watch?v=chl0R8C4NJ8",
-      "thumbnail": "https://img.youtube.com/vi/chl0R8C4NJ8/hqdefault.jpg",
       "source": "youtube-official"
     }
   ]
