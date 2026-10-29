@@ -727,6 +727,7 @@ button:focus-visible,[role=button]:focus-visible,.grid-item:focus-visible,.card-
 
 <div id="videoModal" class="ig-reels-modal">
     <video id="videoPlayer" loop playsinline onclick="togglePlayPause()"></video>
+    <iframe id="youtubePlayer" title="Pemutar YouTube H2H" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen playsinline style="display:none;position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;z-index:1;"></iframe>
     
     <div class="ig-reels-ui">
         <!-- Tombol Close (Kiri Atas) -->
@@ -2411,9 +2412,12 @@ function putarVideo(src, caption) {
     }
     var modal = document.getElementById('videoModal');
     var player = document.getElementById('videoPlayer');
+    var youtubePlayer = document.getElementById('youtubePlayer');
     var btnFS = document.getElementById('btnToggleFS');
     
     if(modal && player) {
+        if(youtubePlayer) { youtubePlayer.style.display = 'none'; youtubePlayer.src = ''; }
+        player.style.display = 'block';
         player.src = src;
         modal.classList.add('show');
         player.play();
@@ -2484,11 +2488,14 @@ function toggleVideoFullscreen() {
 function tutupVideo() {
     var modal = document.getElementById('videoModal');
     var player = document.getElementById('videoPlayer');
+    var youtubePlayer = document.getElementById('youtubePlayer');
     var menu = document.getElementById('videoMenu');
     if(menu) menu.style.display = 'none';
     if(modal && player) {
         player.pause();
         player.src = '';
+        player.style.display = 'block';
+        if(youtubePlayer) { youtubePlayer.src = ''; youtubePlayer.style.display = 'none'; }
         modal.classList.remove('show');
         
         // Keluar Fullscreen & Balik Tegak
@@ -3318,11 +3325,41 @@ function buatSemuaThumbnail(){
 }
 
 function bukaVideoYouTube(url){
-    if(!url || !/^https:\/\/www\.youtube\.com\/(watch\?|shorts\/)|^https:\/\/youtu\.be\//.test(url)){
+    if(!url){
         toast('Link YouTube tidak valid.');
         return;
     }
-    window.open(url,'_blank','noopener,noreferrer');
+    var id = '';
+    try {
+        var parsed = new URL(url);
+        if(parsed.hostname === 'youtu.be') id = parsed.pathname.split('/').filter(Boolean)[0] || '';
+        else if(parsed.hostname === 'www.youtube.com' || parsed.hostname === 'youtube.com' || parsed.hostname === 'm.youtube.com') {
+            if(parsed.pathname === '/watch') id = parsed.searchParams.get('v') || '';
+            else if(parsed.pathname.indexOf('/shorts/') === 0) id = parsed.pathname.split('/')[2] || '';
+            else if(parsed.pathname.indexOf('/embed/') === 0) id = parsed.pathname.split('/')[2] || '';
+        }
+    } catch(e) {}
+    if(!/^[A-Za-z0-9_-]{11}$/.test(id)){
+        toast('Link YouTube tidak valid.');
+        return;
+    }
+    var modal = document.getElementById('videoModal');
+    var player = document.getElementById('videoPlayer');
+    var youtubePlayer = document.getElementById('youtubePlayer');
+    if(!modal || !player || !youtubePlayer){
+        toast('Pemutar video belum siap. Muat ulang aplikasi.');
+        return;
+    }
+    currentVideoSrc = url;
+    player.pause();
+    player.removeAttribute('src');
+    player.load();
+    player.style.display = 'none';
+    youtubePlayer.style.display = 'block';
+    youtubePlayer.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&playsinline=1&rel=0';
+    var desc = document.getElementById('videoDesc');
+    if(desc) desc.textContent = 'YouTube Resmi • Hearts2Hearts';
+    modal.classList.add('show');
 }
 
 function renderVideoGlobal() {
