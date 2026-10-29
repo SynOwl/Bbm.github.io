@@ -3354,7 +3354,7 @@ function buatSemuaThumbnail(){
 function bukaVideoOnline(url){
     var safe=String(url||'');
     // Hanya buka laman video di browser; URL web tidak pernah dimasukkan ke video.src.
-    if(!/^https:\/\/(www\.)?(youtube\.com|youtu\.be)\//i.test(safe)){
+    if(!/^https:\/\/(www\.)?(youtube\.com|youtu\.be|instagram\.com)\//i.test(safe)){
         toast('⚠️ Tautan video online tidak valid.'); return;
     }
     var win=window.open(safe,'_blank','noopener,noreferrer');
