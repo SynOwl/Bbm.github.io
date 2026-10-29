@@ -11,19 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#FCE4EC;--bg2:#F8BBD0;--acc1:#EC407A;--acc2:#AB47BC;--tint:.12}
-/* ===== TEMA OTOMATIS BULANAN H2H ===== */
-body[data-tema-bulanan="01"]{--bg1:#E3F2FD;--bg2:#90CAF9;--acc1:#1976D2;--acc2:#5E35B1}
-body[data-tema-bulanan="02"]{--bg1:#FCE4EC;--bg2:#F8BBD0;--acc1:#EC407A;--acc2:#AB47BC}
-body[data-tema-bulanan="03"]{--bg1:#E0F7FA;--bg2:#80DEEA;--acc1:#00838F;--acc2:#3949AB}
-body[data-tema-bulanan="04"]{--bg1:#F3E5F5;--bg2:#CE93D8;--acc1:#8E24AA;--acc2:#3949AB}
-body[data-tema-bulanan="05"]{--bg1:#E8F5E9;--bg2:#A5D6A7;--acc1:#388E3C;--acc2:#00897B}
-body[data-tema-bulanan="06"]{--bg1:#FFF3E0;--bg2:#FFCC80;--acc1:#EF6C00;--acc2:#D81B60}
-body[data-tema-bulanan="07"]{--bg1:#EDE7F6;--bg2:#B39DDB;--acc1:#5E35B1;--acc2:#00897B}
-body[data-tema-bulanan="08"]{--bg1:#FCE4EC;--bg2:#F48FB1;--acc1:#D81B60;--acc2:#6A1B9A}
-body[data-tema-bulanan="09"]{--bg1:#E0F2F1;--bg2:#80CBC4;--acc1:#00796B;--acc2:#3949AB}
-body[data-tema-bulanan="10"]{--bg1:#FCE4EC;--bg2:#CE93D8;--acc1:#D81B60;--acc2:#6A1B9A}
-body[data-tema-bulanan="11"]{--bg1:#E3F2FD;--bg2:#B0BEC5;--acc1:#1565C0;--acc2:#546E7A}
-body[data-tema-bulanan="12"]{--bg1:#E8EAF6;--bg2:#B2DFDB;--acc1:#3949AB;--acc2:#00897B}
 body[data-tema="jiwoo"]{--bg1:#FFE0EC;--bg2:#FFB6C1;--acc1:#FF4081;--acc2:#F50057}
 body[data-tema="carmen"]{--bg1:#A5D6A7;--bg2:#43A047;--acc1:#2E7D32;--acc2:#1B5E20}
 body[data-tema="yuha"]{--bg1:#FFE4F0;--bg2:#FFB8D1;--acc1:#FF6FA5;--acc2:#E91E63}
@@ -3440,26 +3427,19 @@ if(document.readyState === 'interactive' || document.readyState === 'complete') 
 
 // ===== INIT =====
 // Tema otomatis mengikuti bulan kalender. Hari ulang tahun member/anniversary tetap diprioritaskan.
-function terapkanTemaBulanan(date){
-    var d=date||new Date();
-    var bulan=String(d.getMonth()+1).padStart(2,'0');
-    var nama=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][d.getMonth()];
-    document.body.setAttribute('data-tema-bulanan',bulan);
-    document.body.setAttribute('data-label-tema-bulanan',nama);
-    return {bulan:bulan,nama:nama,kunci:d.getFullYear()+'-'+bulan};
-}
+// Notifikasi bulanan untuk update H2H; tema hanya berubah mengikuti konsep/tema resmi H2H yang diperbarui.
 function cekNotifikasiUpdateBulanan(date){
     var d=date||new Date();
-    var info=terapkanTemaBulanan(d);
+    var nama=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][d.getMonth()];
     var key='bbmH2HUpdateNotice';
+    var periode=d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
     var last='';
     try{last=localStorage.getItem(key)||'';}catch(e){}
-    if(last!==info.kunci){
-        // Notifikasi dalam aplikasi saat dibuka; bukan push notification di latar belakang.
+    if(last!==periode){
         setTimeout(function(){
-            if(typeof toast==='function') toast('🔔 Update bulanan BBM x H2H • '+info.nama+' '+d.getFullYear()+'! Tema bulan ini sudah aktif 💙');
+            if(typeof toast==='function') toast('🔔 Update bulanan H2H • '+nama+' '+d.getFullYear()+' 💙');
         },1200);
-        try{localStorage.setItem(key,info.kunci);}catch(e){}
+        try{localStorage.setItem(key,periode);}catch(e){}
     }
 }
 function initApp(){
@@ -3479,7 +3459,7 @@ function initApp(){
     var rDate='';try{rDate=localStorage.getItem('rewardsDate')||'';}catch(e){}
     if(rDate!==today){saving=0;todayRewards={};try{localStorage.setItem('tabunganWaktu','0');localStorage.setItem('todayRewards','{}');localStorage.setItem('rewardsDate',today);}catch(e){}}
     var evHariIni=cekEventHariIni();
-    // Terapkan tema kalender dan cek notifikasi setiap bulan; tema ulang tahun tetap menang melalui aturan CSS member.
+    // Cek notifikasi bulanan; tema tetap mengikuti H2H dan aturan ulang tahun member.
     cekNotifikasiUpdateBulanan(now);
     if(evHariIni.length>0){
         var ev=evHariIni[0];
