@@ -727,6 +727,7 @@ button:focus-visible,[role=button]:focus-visible,.grid-item:focus-visible,.card-
 
 <div id="videoModal" class="ig-reels-modal">
     <video id="videoPlayer" loop playsinline onclick="togglePlayPause()"></video>
+    <iframe id="youtubePlayer" title="Video Hearts2Hearts" style="display:none;position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
     
     <div class="ig-reels-ui">
         <!-- Tombol Close (Kiri Atas) -->
@@ -2387,6 +2388,10 @@ function uploadLatarGaleri() {
 
 var currentVideoSrc = '';
 function putarVideo(src, caption) {
+    var yt=document.getElementById('youtubePlayer');
+    var local=document.getElementById('videoPlayer');
+    if(yt){yt.src='';yt.style.display='none';}
+    if(local)local.style.display='block';
     currentVideoSrc = src;
     var idx = SEMUA_VIDEO_GALERI.indexOf(src);
     if (idx !== -1) { currentVideoIndex = idx; }
@@ -2484,11 +2489,14 @@ function toggleVideoFullscreen() {
 function tutupVideo() {
     var modal = document.getElementById('videoModal');
     var player = document.getElementById('videoPlayer');
+    var yt = document.getElementById('youtubePlayer');
     var menu = document.getElementById('videoMenu');
     if(menu) menu.style.display = 'none';
+    if(yt){yt.src='';yt.style.display='none';}
     if(modal && player) {
         player.pause();
         player.src = '';
+        player.style.display='block';
         modal.classList.remove('show');
         
         // Keluar Fullscreen & Balik Tegak
@@ -2503,6 +2511,10 @@ function tutupVideo() {
 
 function simpanVideoKeHP() {
     if(!currentVideoSrc) return;
+    if(/^https:\/\//.test(currentVideoSrc)){
+        toast('Video YouTube diputar di BBM, tetapi penyimpanan harus melalui fitur resmi YouTube.');
+        return;
+    }
     var a = document.createElement('a');
     a.href = currentVideoSrc;
     a.download = 'Video_H2H.mp4';
@@ -3317,12 +3329,29 @@ function buatSemuaThumbnail(){
     });
 }
 
-function bukaVideoYouTube(url){
-    if(!url || !/^https:\/\/www\.youtube\.com\/(watch\?|shorts\/)|^https:\/\/youtu\.be\//.test(url)){
-        toast('Link YouTube tidak valid.');
+function putarYouTubeDalamApp(id, url, judul){
+    if(!id || !/^[A-Za-z0-9_-]{6,}$/.test(id)){
+        toast('Video YouTube tidak valid.');
         return;
     }
-    window.open(url,'_blank','noopener,noreferrer');
+    var modal=document.getElementById('videoModal');
+    var local=document.getElementById('videoPlayer');
+    var yt=document.getElementById('youtubePlayer');
+    var desc=document.getElementById('videoDesc');
+    currentVideoSrc=url || ('https://www.youtube.com/watch?v='+id);
+    if(local){local.pause();local.removeAttribute('src');local.load();local.style.display='none';}
+    if(yt){
+        yt.style.display='block';
+        // Shorts and regular videos use the same embedded player endpoint.
+        yt.src='https://www.youtube-nocookie.com/embed/'+encodeURIComponent(id)+'?autoplay=1&playsinline=1&rel=0';
+    }
+    if(desc) desc.textContent='▶ YouTube Resmi • '+(judul||'Hearts2Hearts');
+    if(modal) modal.classList.add('show');
+}
+function bukaVideoYouTube(url){
+    var match=String(url||'').match(/(?:youtube\.com\/(?:watch\?.*?v=|shorts\/)|youtu\.be\/)([A-Za-z0-9_-]{6,})/);
+    if(!match){toast('Link YouTube tidak valid.');return;}
+    putarYouTubeDalamApp(match[1],url,'Hearts2Hearts');
 }
 
 function renderVideoGlobal() {
@@ -3343,10 +3372,10 @@ function renderVideoGlobal() {
         var videoKey = online ? v.onlineUrl : v.video;
         if(!online) SEMUA_VIDEO_GALERI.push(videoKey);
         var click = online
-            ? "bukaVideoYouTube('" + String(v.onlineUrl).replace(/'/g, "%27") + "')"
+            ? "putarYouTubeDalamApp('" + String(v.video).replace(/^online:/,'') + "','" + String(v.onlineUrl).replace(/'/g, "%27") + "','" + String(v.judul).replace(/'/g, "\\'") + "')"
             : "putarVideo('" + String(v.video).replace(/'/g, "\\'") + "', '" + String(captionVideo(v)).replace(/'/g, "\\'") + "')";
         var poster = online && v.thumb
-            ? '<img src="' + v.thumb + '" alt="Thumbnail ' + amanTeks(v.judul) + '" loading="lazy" referrerpolicy="no-referrer" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">'
+            ? '<img src="' + v.thumb + '" alt="Thumbnail ' + amanTeks(v.judul) + '" loading="lazy" referrerpolicy="no-referrer" onerror="this.onerror=null;this.src=\'https://img.youtube.com/vi/' + String(v.video).replace(/^online:/,'') + '/hqdefault.jpg\'" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">'
             : '<img data-video-poster="' + v.video + '" alt="Cuplikan ' + amanTeks(v.judul) + '" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">';
         html += '<div onclick="' + click + '" style="position:relative; aspect-ratio:9/16; border-radius:16px; overflow:hidden; background:#222; border:2px solid rgba(255,255,255,0.4); display:flex; flex-direction:column; justify-content:flex-end; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.4);">' +
             poster +
