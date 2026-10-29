@@ -3400,7 +3400,28 @@ document.addEventListener('DOMContentLoaded', setupSwipe);
 if(document.readyState === 'interactive' || document.readyState === 'complete') setupSwipe();
 
 // ===== INIT =====
+function muatKatalogH2HOtomatis(){
+    fetch('data/h2h-monthly.json',{cache:'no-store'})
+        .then(function(r){if(!r.ok) throw new Error('Katalog belum tersedia');return r.json();})
+        .then(function(data){
+            var now=new Date();
+            var bulan=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
+            if(!data||data.month!==bulan||!Array.isArray(data.videos))return;
+            var daftar=Array.isArray(DAFTAR_VIDEO_TERMUX)?DAFTAR_VIDEO_TERMUX:[];
+            daftar=daftar.filter(function(v){return !v.officialMV;});
+            data.videos.forEach(function(v){
+                if(!v||!v.id||!v.title||!/mv/i.test(v.title))return;
+                daftar.unshift({judul:v.title,video:'online:'+v.id,onlineUrl:v.url,thumb:v.thumbnail,
+                    label:'MV Resmi • '+data.month,folder:'h2h',officialMV:true});
+            });
+            DAFTAR_VIDEO_TERMUX=daftar;
+            if(typeof renderVideoGlobal==='function')renderVideoGlobal();
+        })
+        .catch(function(){/* Katalog offline tidak mengganggu fitur inti BBM. */});
+}
+
 function initApp(){
+    muatKatalogH2HOtomatis();
 
     cekResetKuota();
     var tema='h2h';

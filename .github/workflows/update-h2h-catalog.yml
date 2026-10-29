@@ -1,0 +1,37 @@
+name: Update H2H monthly content
+
+on:
+  schedule:
+    - cron: "17 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: h2h-monthly-content
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+      - name: Build current-month official MV catalog
+        run: python3 scripts/update_h2h_catalog.py
+      - name: Commit catalog when changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data/h2h-monthly.json
+          if git diff --cached --quiet; then
+            echo "No H2H catalog changes."
+          else
+            git commit -m "chore: refresh monthly H2H official content"
+            git push origin HEAD:main
+          fi
