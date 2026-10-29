@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
-      - name: Build current-month official MV catalog
+      - name: Build current-month official YouTube catalog
         run: python3 scripts/update_h2h_catalog.py
       - name: Commit catalog when changed
         run: |
@@ -32,6 +32,6 @@ jobs:
           if git diff --cached --quiet; then
             echo "No H2H catalog changes."
           else
-            git commit -m "chore: refresh monthly H2H official content"
+            git commit -m "chore: refresh monthly H2H YouTube content"
             git push origin HEAD:main
           fi
