@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: feat/h2h-auto-updates-clean
+          ref: main
       - uses: actions/setup-python@v5
         with:
           python-version: "3.x"
@@ -33,5 +33,5 @@ jobs:
             echo "No H2H catalog changes."
           else
             git commit -m "chore: refresh monthly H2H official content"
-            git push origin HEAD:feat/h2h-auto-updates-clean
+            git push origin HEAD:main
           fi
