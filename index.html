@@ -3442,7 +3442,36 @@ function cekNotifikasiUpdateBulanan(date){
         try{localStorage.setItem(key,periode);}catch(e){}
     }
 }
+function muatKatalogH2HOtomatis(){
+    // JSON ini diperbarui terjadwal oleh GitHub Actions; bulan berjalan menggantikan koleksi MV resmi sebelumnya.
+    fetch('data/h2h-monthly.json',{cache:'no-store'})
+        .then(function(r){if(!r.ok) throw new Error('Katalog belum tersedia'); return r.json();})
+        .then(function(data){
+            var bulanSekarang=new Date().getFullYear()+'-'+String(new Date().getMonth()+1).padStart(2,'0');
+            if(!data || data.month!==bulanSekarang || !Array.isArray(data.videos)) return;
+            var daftar=Array.isArray(DAFTAR_VIDEO_TERMUX)?DAFTAR_VIDEO_TERMUX:[];
+            daftar=daftar.filter(function(v){return !v.officialMV;});
+            data.videos.forEach(function(v){
+                if(!v || !v.id || !v.title || !/mv/i.test(v.title)) return;
+                daftar.unshift({
+                    judul:v.title,
+                    video:'online:'+v.id,
+                    onlineUrl:v.url,
+                    thumb:v.thumbnail,
+                    label:'MV Resmi • '+data.month,
+                    folder:'h2h',
+                    officialMV:true
+                });
+            });
+            DAFTAR_VIDEO_TERMUX=daftar;
+            if(typeof renderVideoGlobal==='function') renderVideoGlobal();
+            if(typeof toast==='function' && data.videos.length) toast('💙 Katalog MV resmi H2H diperbarui');
+        })
+        .catch(function(){ /* Fitur inti tetap berjalan bila koneksi/katalog belum tersedia. */ });
+}
+
 function initApp(){
+    muatKatalogH2HOtomatis();
 
     cekResetKuota();
     var tema='h2h';
