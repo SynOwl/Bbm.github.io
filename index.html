@@ -326,6 +326,21 @@ button:focus-visible,[role=button]:focus-visible,.grid-item:focus-visible,.card-
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 @media(min-width:520px){.app{padding-left:20px;padding-right:20px}}
 
+
+/* ===== TEMA OTOMATIS BULANAN H2H ===== */
+body[data-tema-bulanan="01"]{--bg1:#E3F2FD;--bg2:#90CAF9;--acc1:#1976D2;--acc2:#5E35B1}
+body[data-tema-bulanan="02"]{--bg1:#FCE4EC;--bg2:#F8BBD0;--acc1:#EC407A;--acc2:#AB47BC}
+body[data-tema-bulanan="03"]{--bg1:#E0F7FA;--bg2:#80DEEA;--acc1:#00838F;--acc2:#3949AB}
+body[data-tema-bulanan="04"]{--bg1:#F3E5F5;--bg2:#CE93D8;--acc1:#8E24AA;--acc2:#3949AB}
+body[data-tema-bulanan="05"]{--bg1:#E8F5E9;--bg2:#A5D6A7;--acc1:#388E3C;--acc2:#00897B}
+body[data-tema-bulanan="06"]{--bg1:#FFF3E0;--bg2:#FFCC80;--acc1:#EF6C00;--acc2:#D81B60}
+body[data-tema-bulanan="07"]{--bg1:#EDE7F6;--bg2:#B39DDB;--acc1:#5E35B1;--acc2:#00897B}
+body[data-tema-bulanan="08"]{--bg1:#FCE4EC;--bg2:#F48FB1;--acc1:#D81B60;--acc2:#6A1B9A}
+body[data-tema-bulanan="09"]{--bg1:#E0F2F1;--bg2:#80CBC4;--acc1:#00796B;--acc2:#3949AB}
+body[data-tema-bulanan="10"]{--bg1:#FCE4EC;--bg2:#CE93D8;--acc1:#D81B60;--acc2:#6A1B9A}
+body[data-tema-bulanan="11"]{--bg1:#E3F2FD;--bg2:#B0BEC5;--acc1:#1565C0;--acc2:#546E7A}
+body[data-tema-bulanan="12"]{--bg1:#E8EAF6;--bg2:#B2DFDB;--acc1:#3949AB;--acc2:#00897B}
+
 </style>
 </head>
 <body data-tema="h2h">
@@ -3400,6 +3415,29 @@ document.addEventListener('DOMContentLoaded', setupSwipe);
 if(document.readyState === 'interactive' || document.readyState === 'complete') setupSwipe();
 
 // ===== INIT =====
+// Tema otomatis mengikuti bulan kalender. Hari ulang tahun member/anniversary tetap diprioritaskan.
+function terapkanTemaBulanan(date){
+    var d=date||new Date();
+    var bulan=String(d.getMonth()+1).padStart(2,'0');
+    var nama=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][d.getMonth()];
+    document.body.setAttribute('data-tema-bulanan',bulan);
+    document.body.setAttribute('data-label-tema-bulanan',nama);
+    return {bulan:bulan,nama:nama,kunci:d.getFullYear()+'-'+bulan};
+}
+function cekNotifikasiUpdateBulanan(date){
+    var d=date||new Date();
+    var info=terapkanTemaBulanan(d);
+    var key='bbmH2HUpdateNotice';
+    var last='';
+    try{last=localStorage.getItem(key)||'';}catch(e){}
+    if(last!==info.kunci){
+        // Notifikasi dalam aplikasi saat dibuka; bukan push notification di latar belakang.
+        setTimeout(function(){
+            if(typeof toast==='function') toast('🔔 Update bulanan BBM x H2H • '+info.nama+' '+d.getFullYear()+'! Tema bulan ini sudah aktif 💙');
+        },1200);
+        try{localStorage.setItem(key,info.kunci);}catch(e){}
+    }
+}
 function initApp(){
 
     cekResetKuota();
@@ -3421,6 +3459,8 @@ function initApp(){
         var ev=evHariIni[0];
         if(ev.type==='member'){birthdayMember=ev.id;lockedTheme=ev.id;document.body.setAttribute('data-tema',ev.id);try{localStorage.setItem('temaH2H',ev.id);}catch(err){}}
         else{lockedTheme='h2h';document.body.setAttribute('data-tema','h2h');try{localStorage.setItem('temaH2H','h2h');}catch(err){}}
+    } else {
+        cekNotifikasiUpdateBulanan(now);
     }
     if(selectedDate===today&&selectedDay){currentHari=selectedDay;document.getElementById('chipHari').textContent=selectedDay;go('s-dash');setTimeout(function(){if(evHariIni.length>0)tampilkanPopupEvent(evHariIni);},800);}else{go('s-hari');}
     updateXPBar();checkStreak();
