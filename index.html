@@ -740,7 +740,7 @@ button:focus-visible,[role=button]:focus-visible,.grid-item:focus-visible,.card-
         <div class="ig-actions">
             <div class="ig-action-btn" onclick="simpanVideoKeHP()">
                 <span class="ig-icon">💾</span>
-                <span class="ig-text">Simpan</span>
+                <span class="ig-text">Unduh Offline</span>
             </div>
             <div class="ig-action-btn" onclick="shareVideo()">
                 <span class="ig-icon">🔗</span>
@@ -2387,50 +2387,83 @@ function uploadLatarGaleri() {
 }
 
 var currentVideoSrc = '';
+var currentVideoObjectUrl = '';
+var videoLoadToken = 0;
+var bbmOfflineDbPromise = null;
+function kunciVideoOffline(src) {
+    try { return new URL(src, document.baseURI).href; }
+    catch(e) { return String(src || ''); }
+}
+function bukaDatabaseVideoOffline() {
+    if (bbmOfflineDbPromise) return bbmOfflineDbPromise;
+    bbmOfflineDbPromise = new Promise(function(resolve, reject) {
+        if (!window.indexedDB) { reject(new Error('Penyimpanan offline tidak didukung browser ini.')); return; }
+        var request = indexedDB.open('BBMVideoOffline', 1);
+        request.onupgradeneeded = function() {
+            if (!request.result.objectStoreNames.contains('videos')) request.result.createObjectStore('videos');
+        };
+        request.onsuccess = function() { resolve(request.result); };
+        request.onerror = function() { reject(request.error || new Error('Database offline gagal dibuka.')); };
+    });
+    return bbmOfflineDbPromise;
+}
+function ambilVideoOffline(src) {
+    return bukaDatabaseVideoOffline().then(function(db) {
+        return new Promise(function(resolve, reject) {
+            var req = db.transaction('videos', 'readonly').objectStore('videos').get(kunciVideoOffline(src));
+            req.onsuccess = function() { resolve(req.result || null); };
+            req.onerror = function() { reject(req.error); };
+        });
+    });
+}
+function simpanBlobVideoOffline(src, record) {
+    return bukaDatabaseVideoOffline().then(function(db) {
+        return new Promise(function(resolve, reject) {
+            var tx = db.transaction('videos', 'readwrite');
+            tx.objectStore('videos').put(record, kunciVideoOffline(src));
+            tx.oncomplete = function() { resolve(); };
+            tx.onerror = function() { reject(tx.error || new Error('Video gagal disimpan.')); };
+            tx.onabort = function() { reject(tx.error || new Error('Penyimpanan dibatalkan.')); };
+        });
+    });
+}
+function aturSumberPemutar(src, player) {
+    var token = ++videoLoadToken;
+    if (currentVideoObjectUrl) { URL.revokeObjectURL(currentVideoObjectUrl); currentVideoObjectUrl = ''; }
+    ambilVideoOffline(src).then(function(record) {
+        if (token !== videoLoadToken || !player) return;
+        player.src = record && record.blob ? (currentVideoObjectUrl = URL.createObjectURL(record.blob)) : src;
+        player.load();
+        var p = player.play();
+        if (p && p.catch) p.catch(function(){});
+    }).catch(function() {
+        if (token !== videoLoadToken || !player) return;
+        player.src = src;
+        player.load();
+        var p = player.play();
+        if (p && p.catch) p.catch(function(){});
+    });
+}
 function putarVideo(src, caption) {
     currentVideoSrc = src;
     var idx = SEMUA_VIDEO_GALERI.indexOf(src);
     if (idx !== -1) { currentVideoIndex = idx; }
     else { SEMUA_VIDEO_GALERI = [src]; currentVideoIndex = 0; }
-    
     var descEl = document.getElementById('videoDesc');
-    if (descEl) {
-        if (caption) {
-            descEl.textContent = caption;
-        } else {
-            if (src.includes('/unit/')) {
-                var folder = src.split('/')[2];
-                descEl.innerHTML = 'Unit: ' + folder.replace(/_/g, ' & ');
-            } else if (src.includes('/mv')) {
-                descEl.innerHTML = 'H2H Music Video';
-            } else {
-                var parts = src.split('/');
-                var name = parts[1] ? parts[1].charAt(0).toUpperCase() + parts[1].slice(1) : 'Member';
-                descEl.innerHTML = name + ' - Video';
-            }
-        }
-    }
+    if (descEl) descEl.textContent = caption || captionVideo({video:src, judul:src.split('/').pop()});
     var modal = document.getElementById('videoModal');
     var player = document.getElementById('videoPlayer');
     var youtubePlayer = document.getElementById('youtubePlayer');
     var btnFS = document.getElementById('btnToggleFS');
-    
-    if(modal && player) {
-        if(youtubePlayer) { youtubePlayer.style.display = 'none'; youtubePlayer.src = ''; }
+    if (modal && player) {
+        if (youtubePlayer) { youtubePlayer.style.display = 'none'; youtubePlayer.src = ''; }
         player.style.display = 'block';
-        player.src = src;
         modal.classList.add('show');
-        player.play();
-        
-        // Pastikan selalu mulai dengan mode normal (portrait fit screen)
+        aturSumberPemutar(src, player);
         if (document.exitFullscreen) document.exitFullscreen().catch(function(){});
         else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-        
-        if (screen.orientation && screen.orientation.lock) {
-            screen.orientation.lock('portrait').catch(function(){});
-        }
-        
-        if(btnFS) btnFS.innerHTML = '⛶ Full Screen (Miring)';
+        if (screen.orientation && screen.orientation.lock) screen.orientation.lock('portrait').catch(function(){});
+        if (btnFS) btnFS.innerHTML = '⛶ Full Screen (Miring)';
     }
 }
 function togglePlayPause() {
@@ -2492,8 +2525,10 @@ function tutupVideo() {
     var menu = document.getElementById('videoMenu');
     if(menu) menu.style.display = 'none';
     if(modal && player) {
+        videoLoadToken++;
         player.pause();
         player.src = '';
+        if(currentVideoObjectUrl){URL.revokeObjectURL(currentVideoObjectUrl);currentVideoObjectUrl='';}
         player.style.display = 'block';
         if(youtubePlayer) { youtubePlayer.src = ''; youtubePlayer.style.display = 'none'; }
         modal.classList.remove('show');
@@ -2509,15 +2544,24 @@ function tutupVideo() {
 }
 
 function simpanVideoKeHP() {
-    if(!currentVideoSrc) return;
-    var a = document.createElement('a');
-    a.href = currentVideoSrc;
-    a.download = 'Video_H2H.mp4';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    toast('📥 Memproses simpan video...');
-    
+    var src = currentVideoSrc;
+    if (!src) { toast('Pilih video MP4 terlebih dahulu.'); return; }
+    if (/^https?:\/\/.*(?:youtube\.com|youtu\.be)/i.test(src) || /^online:/i.test(src)) {
+        toast('Hanya file MP4 yang bisa disimpan offline.');
+        return;
+    }
+    toast('📥 Mengunduh video untuk ditonton offline…');
+    fetch(src).then(function(response) {
+        if (!response.ok) throw new Error('File MP4 tidak ditemukan.');
+        return response.blob();
+    }).then(function(blob) {
+        if (!blob || !blob.size) throw new Error('File video kosong.');
+        return simpanBlobVideoOffline(src, {blob:blob, title:src.split('/').pop(), savedAt:Date.now(), size:blob.size});
+    }).then(function() {
+        toast('✅ Video tersimpan di HP dan bisa diputar tanpa internet.');
+    }).catch(function() {
+        toast('Gagal menyimpan offline. Periksa internet, ruang penyimpanan, dan file MP4.');
+    });
 }
 function shareVideo() {
     if(!currentVideoSrc) return;
@@ -3324,44 +3368,6 @@ function buatSemuaThumbnail(){
     });
 }
 
-function bukaVideoYouTube(url){
-    if(!url){
-        toast('Link YouTube tidak valid.');
-        return;
-    }
-    var id = '';
-    try {
-        var parsed = new URL(url);
-        if(parsed.hostname === 'youtu.be') id = parsed.pathname.split('/').filter(Boolean)[0] || '';
-        else if(parsed.hostname === 'www.youtube.com' || parsed.hostname === 'youtube.com' || parsed.hostname === 'm.youtube.com') {
-            if(parsed.pathname === '/watch') id = parsed.searchParams.get('v') || '';
-            else if(parsed.pathname.indexOf('/shorts/') === 0) id = parsed.pathname.split('/')[2] || '';
-            else if(parsed.pathname.indexOf('/embed/') === 0) id = parsed.pathname.split('/')[2] || '';
-        }
-    } catch(e) {}
-    if(!/^[A-Za-z0-9_-]{11}$/.test(id)){
-        toast('Link YouTube tidak valid.');
-        return;
-    }
-    var modal = document.getElementById('videoModal');
-    var player = document.getElementById('videoPlayer');
-    var youtubePlayer = document.getElementById('youtubePlayer');
-    if(!modal || !player || !youtubePlayer){
-        toast('Pemutar video belum siap. Muat ulang aplikasi.');
-        return;
-    }
-    currentVideoSrc = url;
-    player.pause();
-    player.removeAttribute('src');
-    player.load();
-    player.style.display = 'none';
-    youtubePlayer.style.display = 'block';
-    youtubePlayer.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&playsinline=1&rel=0';
-    var desc = document.getElementById('videoDesc');
-    if(desc) desc.textContent = 'YouTube Resmi • Hearts2Hearts';
-    modal.classList.add('show');
-}
-
 function renderVideoGlobal() {
     var list = document.getElementById('videoGlobalList');
     if(!list) return;
@@ -3374,23 +3380,20 @@ function renderVideoGlobal() {
         return;
     }
 
-    for(var i=0; i<DAFTAR_VIDEO_TERMUX.length; i++) {
+    for (var i = 0; i < DAFTAR_VIDEO_TERMUX.length; i++) {
         var v = DAFTAR_VIDEO_TERMUX[i];
-        var online = !!v.onlineUrl;
-        var videoKey = online ? v.onlineUrl : v.video;
-        if(!online) SEMUA_VIDEO_GALERI.push(videoKey);
-        var click = online
-            ? "bukaVideoYouTube('" + String(v.onlineUrl).replace(/'/g, "%27") + "')"
-            : "putarVideo('" + String(v.video).replace(/'/g, "\\'") + "', '" + String(captionVideo(v)).replace(/'/g, "\\'") + "')";
-        var poster = online && v.thumb
-            ? '<img src="' + v.thumb + '" alt="Thumbnail ' + amanTeks(v.judul) + '" loading="lazy" referrerpolicy="no-referrer" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">'
-            : '<img data-video-poster="' + v.video + '" alt="Cuplikan ' + amanTeks(v.judul) + '" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">';
+        if (!v || !v.video || !/\.mp4(?:$|[?#])/i.test(v.video)) continue;
+        SEMUA_VIDEO_GALERI.push(v.video);
+        var click = "putarVideo('" + String(v.video).replace(/'/g, "\\'") + "', '" + String(captionVideo(v)).replace(/'/g, "\\'") + "')";
+        var poster = v.thumb
+            ? '<img src="' + amanTeks(v.thumb) + '" alt="Thumbnail ' + amanTeks(v.judul) + '" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:#222;">'
+            : '<img data-video-poster="' + amanTeks(v.video) + '" alt="Cuplikan ' + amanTeks(v.judul) + '" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:#222;">';
         html += '<div onclick="' + click + '" style="position:relative; aspect-ratio:9/16; border-radius:16px; overflow:hidden; background:#222; border:2px solid rgba(255,255,255,0.4); display:flex; flex-direction:column; justify-content:flex-end; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.4);">' +
             poster +
             '<div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 40%, transparent 80%);"></div>' +
             '<div style="position:relative; padding:15px 8px 12px; text-align:center; z-index:1;">' +
                 '<div style="font-size:14px; font-weight:900; color:#FFF; text-shadow:0 2px 4px rgba(0,0,0,1); margin-bottom:4px;">' + amanTeks(v.judul) + '</div>' +
-                '<div style="font-size:11px; color:#FFF; font-weight:700; background:linear-gradient(135deg,#EC407A,#AB47BC); padding:3px 10px; border-radius:12px; display:inline-block; box-shadow:0 2px 5px rgba(0,0,0,0.5);">' + amanTeks(v.label) + '</div>' +
+                '<div style="font-size:11px; color:#FFF; font-weight:700; background:linear-gradient(135deg,#EC407A,#AB47BC); padding:3px 10px; border-radius:12px; display:inline-block; box-shadow:0 2px 5px rgba(0,0,0,0.5);">MP4 • Offline</div>' +
             '</div>' +
         '</div>';
     }
@@ -3443,41 +3446,32 @@ function putarVideoSebelumnya() {
 function gantiVideoPlayer(src) {
     currentVideoSrc = src;
     var player = document.getElementById('videoPlayer');
-    if(player) {
-        player.src = src;
-        player.play();
-    }
+    if (player) aturSumberPemutar(src, player);
 }
 
 document.addEventListener('DOMContentLoaded', setupSwipe);
 if(document.readyState === 'interactive' || document.readyState === 'complete') setupSwipe();
 
 // ===== INIT =====
-function muatKatalogH2HOtomatis(){
-    // Katalog bulanan mengambil semua unggahan dari kanal YouTube resmi H2H.
-    fetch('data/h2h-monthly.json',{cache:'no-store'})
-        .then(function(r){if(!r.ok) throw new Error('Katalog belum tersedia');return r.json();})
-        .then(function(data){
-            var now=new Date();
-            var bulan=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
-            if(!data||data.month!==bulan||!Array.isArray(data.videos))return;
-            // Katalog bulan berjalan menggantikan daftar galeri lama agar konten bulan sebelumnya tidak ikut tampil.
-            var daftar=[];
-            data.videos.forEach(function(v){
-                if(!v||!v.id||!v.title||!v.url)return;
-                daftar.unshift({
-                    judul:v.title,video:'online:'+v.id,onlineUrl:v.url,thumb:v.thumbnail,
-                    label:v.type==='mv'?'MV Resmi • '+data.month:'YouTube Resmi • '+data.month,
-                    folder:'h2h',officialYouTube:true,officialMV:v.type==='mv'
-                });
+function muatKatalogVideoOtomatis() {
+    // Katalog MP4 diperbarui terpisah; reload cukup, APK tidak perlu dipasang ulang.
+    fetch('data/video-catalog.json', {cache:'no-store'})
+        .then(function(r) { if (!r.ok) throw new Error('Katalog MP4 belum tersedia'); return r.json(); })
+        .then(function(data) {
+            if (!data || !Array.isArray(data.videos)) return;
+            var daftar = data.videos.filter(function(v) {
+                return v && v.judul && typeof v.video === 'string' && /\.mp4(?:$|[?#])/i.test(v.video) && !/^https?:\/\//i.test(v.video);
+            }).map(function(v) {
+                return {judul:v.judul, video:v.video, thumb:v.thumb || '', label:v.label || 'Video MP4', folder:v.folder || 'h2h'};
             });
-            DAFTAR_VIDEO_TERMUX=daftar;
-            if(typeof renderVideoGlobal==='function')renderVideoGlobal();
+            if (!daftar.length) return;
+            DAFTAR_VIDEO_TERMUX = daftar;
+            if (typeof renderVideoGlobal === 'function') renderVideoGlobal();
         })
-        .catch(function(){/* Jika katalog belum tersedia, fitur inti BBM tetap berjalan. */});
+        .catch(function() { /* Daftar MP4 bawaan tetap digunakan jika katalog tidak dapat dimuat. */ });
 }
 function initApp(){
-    muatKatalogH2HOtomatis();
+    muatKatalogVideoOtomatis();
 
     cekResetKuota();
     var tema='h2h';
