@@ -3341,7 +3341,7 @@ function renderVideoGlobal() {
         var v = DAFTAR_VIDEO_TERMUX[i];
         var online = !!v.onlineUrl;
         var videoKey = online ? v.onlineUrl : v.video;
-        SEMUA_VIDEO_GALERI.push(videoKey);
+        if(!online) SEMUA_VIDEO_GALERI.push(videoKey);
         var click = online
             ? "bukaVideoYouTube('" + String(v.onlineUrl).replace(/'/g, "%27") + "')"
             : "putarVideo('" + String(v.video).replace(/'/g, "\\'") + "', '" + String(captionVideo(v)).replace(/'/g, "\\'") + "')";
