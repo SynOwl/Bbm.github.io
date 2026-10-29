@@ -3178,6 +3178,26 @@ var DAFTAR_VIDEO_TERMUX = [
         "thumb": "h2h/yuha/3_thumb.jpg",
         "label": "Video Solo",
         "folder": "yuha"
+    },
+    {
+        "judul": "ICONIC HEART (Korean Ver.) MV",
+        "video": "online:iconic-heart-korean-ver",
+        "onlineUrl": "https://www.youtube.com/watch?v=chl0R8C4NJ8",
+        "thumb": "https://img.youtube.com/vi/chl0R8C4NJ8/hqdefault.jpg",
+        "label": "MV Resmi • Oktober 2026",
+        "folder": "official-mv",
+        "officialMV": true,
+        "bulanKatalog": "2026-10"
+    },
+    {
+        "judul": "Next Chapter MV",
+        "video": "online:next-chapter",
+        "onlineUrl": "https://www.youtube.com/watch?v=lu9GinsuyUQ",
+        "thumb": "https://img.youtube.com/vi/lu9GinsuyUQ/hqdefault.jpg",
+        "label": "MV Resmi • Oktober 2026",
+        "folder": "official-mv",
+        "officialMV": true,
+        "bulanKatalog": "2026-10"
     }
 ];
 
@@ -3331,6 +3351,15 @@ function buatSemuaThumbnail(){
     });
 }
 
+function bukaVideoOnline(url){
+    var safe=String(url||'');
+    // Hanya buka laman video di browser; URL web tidak pernah dimasukkan ke video.src.
+    if(!/^https:\/\/(www\.)?(youtube\.com|youtu\.be)\//i.test(safe)){
+        toast('⚠️ Tautan video online tidak valid.'); return;
+    }
+    var win=window.open(safe,'_blank','noopener,noreferrer');
+    if(!win) window.location.href=safe;
+}
 function renderVideoGlobal() {
     var list = document.getElementById('videoGlobalList');
     if(!list) return;
@@ -3342,12 +3371,16 @@ function renderVideoGlobal() {
     }
     for(var i=0; i<DAFTAR_VIDEO_TERMUX.length; i++) {
         var v = DAFTAR_VIDEO_TERMUX[i];
-        // Kartu feed sengaja tanpa caption/judul; hanya cuplikan video dan ikon putar.
-        SEMUA_VIDEO_GALERI.push(v.video);
-        var amanSrc=String(v.video||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'");
-        var amanCaption=captionVideo(v).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\r?\n/g,' ');
-        html += '<div onclick="putarVideo(\'' + amanSrc + '\', \'' + amanCaption + '\')" aria-label="Putar video H2H" role="button" tabindex="0" style="position:relative; aspect-ratio:9/16; border-radius:16px; overflow:hidden; background:#222; border:2px solid rgba(255,255,255,0.4); cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.4);">' +
-            '<img data-video-poster="' + amanTeks(v.video) + '" alt="Cuplikan video H2H" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">' +
+        var online=!!v.onlineUrl;
+        var src=String(v.video||'');
+        var thumb=online ? String(v.thumb||'') : '';
+        var clickAction=online ? "bukaVideoOnline('"+String(v.onlineUrl).replace(/\\/g,'\\\\').replace(/'/g,"\\'")+"')" :
+            "putarVideo('"+src.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+"','"+captionVideo(v).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\r?\n/g,' ')+"')";
+        if(!online) SEMUA_VIDEO_GALERI.push(v.video);
+        // Feed video dibuat tanpa judul/caption; kartu hanya menampilkan thumbnail dan tombol putar.
+        html += '<div onclick="'+clickAction+'" aria-label="Putar video H2H" role="button" tabindex="0" style="position:relative; aspect-ratio:9/16; border-radius:16px; overflow:hidden; background:#222; border:2px solid rgba(255,255,255,0.4); cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.4);">' +
+            (online && thumb ? '<img src="'+amanTeks(thumb)+'" alt="Cuplikan MV resmi H2H" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:linear-gradient(145deg,#42245c,#e75a9b);">' :
+            '<img data-video-poster="'+amanTeks(v.video)+'" alt="Cuplikan video H2H" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">') +
             '<div aria-hidden="true" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(to top,rgba(0,0,0,.16),transparent 45%);"><span style="display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,.48);border:1px solid rgba(255,255,255,.8);color:#fff;font-size:22px;padding-left:3px;">▶</span></div>' +
         '</div>';
     }
