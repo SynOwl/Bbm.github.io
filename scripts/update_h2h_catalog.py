@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Refresh current-month official Hearts2Hearts MV entries from the official YouTube RSS."""
+"""Refresh all current-month uploads from the official Hearts2Hearts YouTube channel RSS."""
 from datetime import datetime, timezone
 import json
 from pathlib import Path
@@ -22,22 +22,24 @@ def main():
         title = (entry.findtext("atom:title", default="", namespaces=NS) or "").strip()
         video_id = (entry.findtext("yt:videoId", default="", namespaces=NS) or "").strip()
         published_raw = (entry.findtext("atom:published", default="", namespaces=NS) or "").strip()
-        if not video_id or not title or "mv" not in title.lower():
+        if not video_id or not title or not published_raw:
             continue
         try:
             published = datetime.fromisoformat(published_raw.replace("Z", "+00:00"))
         except ValueError:
             continue
-        if published.astimezone(timezone.utc).strftime("%Y-%m") != month:
+        published = published.astimezone(timezone.utc)
+        if published.strftime("%Y-%m") != month:
             continue
+        is_mv = "mv" in title.lower()
         videos.append({
-            "id": video_id, "title": title,
-            "published": published.astimezone(timezone.utc).isoformat(),
+            "id": video_id, "title": title, "type": "mv" if is_mv else "youtube",
+            "published": published.isoformat(),
             "url": f"https://www.youtube.com/watch?v={video_id}",
             "thumbnail": f"https://img.youtube.com/vi/{video_id}/hqdefault.jpg",
             "source": "youtube-official"
         })
-    # Preserve already-seen uploads from this same month, because YouTube RSS only exposes recent uploads.
+    # RSS has a limited recent-upload window, so retain this month's already collected entries.
     if OUT.exists():
         try:
             previous = json.loads(OUT.read_text(encoding="utf-8"))
@@ -49,18 +51,14 @@ def main():
             pass
     videos.sort(key=lambda v: v["published"], reverse=True)
     payload = {
-        "schemaVersion": 1, "month": month, "updatedAt": now.isoformat(),
-        "source": {"youtube": "https://www.youtube.com/@hearts2hearts.official",
-                   "instagram": "https://www.instagram.com/hearts2hearts/"},
-        "instagramAutomation": {
-            "status": "manual-link-required",
-            "note": "Automatic Instagram Reel ingestion requires authorized API access; no unreliable scraping is used."
-        },
+        "schemaVersion": 2, "month": month, "updatedAt": now.isoformat(),
+        "source": {"youtube": "https://www.youtube.com/@hearts2hearts.official"},
+        "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
         "videos": videos
     }
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"Wrote {len(videos)} official MV(s) for {month}")
+    print(f"Wrote {len(videos)} official YouTube upload(s) for {month}")
 
 if __name__ == "__main__":
     main()
