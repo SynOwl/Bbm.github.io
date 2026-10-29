@@ -1,19 +1,16 @@
 {
-  "schemaVersion": 1,
+  "schemaVersion": 2,
   "month": "2026-10",
   "updatedAt": null,
   "source": {
-    "youtube": "https://www.youtube.com/@hearts2hearts.official",
-    "instagram": "https://www.instagram.com/hearts2hearts/"
+    "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
-  "instagramAutomation": {
-    "status": "manual-link-required",
-    "note": "Automatic Instagram Reel ingestion requires authorized API access; no unreliable scraping is used."
-  },
+  "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
     {
       "id": "lu9GinsuyUQ",
       "title": "Hearts2Hearts 하츠투하츠 'Next Chapter' MV",
+      "type": "mv",
       "published": "2026-10-16T09:00:00Z",
       "url": "https://www.youtube.com/watch?v=lu9GinsuyUQ",
       "thumbnail": "https://img.youtube.com/vi/lu9GinsuyUQ/hqdefault.jpg",
@@ -22,6 +19,7 @@
     {
       "id": "chl0R8C4NJ8",
       "title": "ICONIC HEART (Korean Ver.) MV",
+      "type": "mv",
       "published": "2026-10-19T09:00:00Z",
       "url": "https://www.youtube.com/watch?v=chl0R8C4NJ8",
       "thumbnail": "https://img.youtube.com/vi/chl0R8C4NJ8/hqdefault.jpg",
