@@ -3271,6 +3271,7 @@ function deteksiVideoOtomatis() {
 // Caption dibuat dari nama/folder video (tanpa mengarang isi adegan).
 function amanTeks(teks){return String(teks||'').replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
 function captionVideo(v){
+    if(v && v.officialYouTube) return (v.officialMV?'🎵 MV Resmi':'▶ YouTube Resmi')+' • Hearts2Hearts | '+String(v.judul||'');
     var path=String(v.video||'');
     var file=path.split('/').pop()||'';
     var folder=path.split('/')[1]||'';
@@ -3316,6 +3317,14 @@ function buatSemuaThumbnail(){
     });
 }
 
+function bukaVideoYouTube(url){
+    if(!url || !/^https:\/\/www\.youtube\.com\/(watch\?|shorts\/)|^https:\/\/youtu\.be\//.test(url)){
+        toast('Link YouTube tidak valid.');
+        return;
+    }
+    window.open(url,'_blank','noopener,noreferrer');
+}
+
 function renderVideoGlobal() {
     var list = document.getElementById('videoGlobalList');
     if(!list) return;
@@ -3330,14 +3339,21 @@ function renderVideoGlobal() {
 
     for(var i=0; i<DAFTAR_VIDEO_TERMUX.length; i++) {
         var v = DAFTAR_VIDEO_TERMUX[i];
-        SEMUA_VIDEO_GALERI.push(v.video);
-        
-        html += '<div onclick="putarVideo(\'' + v.video + '\', \'' + captionVideo(v) + '\')" style="position:relative; aspect-ratio:9/16; border-radius:16px; overflow:hidden; background:#222; border:2px solid rgba(255,255,255,0.4); display:flex; flex-direction:column; justify-content:flex-end; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.4);">' +
-            '<img data-video-poster="' + v.video + '" alt="Cuplikan ' + amanTeks(v.judul) + '" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">' +
+        var online = !!v.onlineUrl;
+        var videoKey = online ? v.onlineUrl : v.video;
+        if(!online) SEMUA_VIDEO_GALERI.push(videoKey);
+        var click = online
+            ? "bukaVideoYouTube('" + String(v.onlineUrl).replace(/'/g, "%27") + "')"
+            : "putarVideo('" + String(v.video).replace(/'/g, "\\'") + "', '" + String(captionVideo(v)).replace(/'/g, "\\'") + "')";
+        var poster = online && v.thumb
+            ? '<img src="' + v.thumb + '" alt="Thumbnail ' + amanTeks(v.judul) + '" loading="lazy" referrerpolicy="no-referrer" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">'
+            : '<img data-video-poster="' + v.video + '" alt="Cuplikan ' + amanTeks(v.judul) + '" loading="lazy" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">';
+        html += '<div onclick="' + click + '" style="position:relative; aspect-ratio:9/16; border-radius:16px; overflow:hidden; background:#222; border:2px solid rgba(255,255,255,0.4); display:flex; flex-direction:column; justify-content:flex-end; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.4);">' +
+            poster +
             '<div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 40%, transparent 80%);"></div>' +
             '<div style="position:relative; padding:15px 8px 12px; text-align:center; z-index:1;">' +
-                '<div style="font-size:14px; font-weight:900; color:#FFF; text-shadow:0 2px 4px rgba(0,0,0,1); margin-bottom:4px;">' + v.judul + '</div>' +
-                '<div style="font-size:11px; color:#FFF; font-weight:700; background:linear-gradient(135deg,#EC407A,#AB47BC); padding:3px 10px; border-radius:12px; display:inline-block; box-shadow:0 2px 5px rgba(0,0,0,0.5);">' + v.label + '</div>' +
+                '<div style="font-size:14px; font-weight:900; color:#FFF; text-shadow:0 2px 4px rgba(0,0,0,1); margin-bottom:4px;">' + amanTeks(v.judul) + '</div>' +
+                '<div style="font-size:11px; color:#FFF; font-weight:700; background:linear-gradient(135deg,#EC407A,#AB47BC); padding:3px 10px; border-radius:12px; display:inline-block; box-shadow:0 2px 5px rgba(0,0,0,0.5);">' + amanTeks(v.label) + '</div>' +
             '</div>' +
         '</div>';
     }
@@ -3408,8 +3424,8 @@ function muatKatalogH2HOtomatis(){
             var now=new Date();
             var bulan=now.getFullYear()+'-'+String(now.getMonth()+1).padStart(2,'0');
             if(!data||data.month!==bulan||!Array.isArray(data.videos))return;
-            var daftar=Array.isArray(DAFTAR_VIDEO_TERMUX)?DAFTAR_VIDEO_TERMUX:[];
-            daftar=daftar.filter(function(v){return !v.officialYouTube;});
+            // Katalog bulan berjalan menggantikan daftar galeri lama agar konten bulan sebelumnya tidak ikut tampil.
+            var daftar=[];
             data.videos.forEach(function(v){
                 if(!v||!v.id||!v.title||!v.url)return;
                 daftar.unshift({
