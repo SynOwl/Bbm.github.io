@@ -11,19 +11,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{--bg1:#FCE4EC;--bg2:#F8BBD0;--acc1:#EC407A;--acc2:#AB47BC;--tint:.12}
-/* ===== TEMA OTOMATIS BULANAN H2H ===== */
-body[data-tema-bulanan="01"]{--bg1:#E3F2FD;--bg2:#90CAF9;--acc1:#1976D2;--acc2:#5E35B1}
-body[data-tema-bulanan="02"]{--bg1:#FCE4EC;--bg2:#F8BBD0;--acc1:#EC407A;--acc2:#AB47BC}
-body[data-tema-bulanan="03"]{--bg1:#E0F7FA;--bg2:#80DEEA;--acc1:#00838F;--acc2:#3949AB}
-body[data-tema-bulanan="04"]{--bg1:#F3E5F5;--bg2:#CE93D8;--acc1:#8E24AA;--acc2:#3949AB}
-body[data-tema-bulanan="05"]{--bg1:#E8F5E9;--bg2:#A5D6A7;--acc1:#388E3C;--acc2:#00897B}
-body[data-tema-bulanan="06"]{--bg1:#FFF3E0;--bg2:#FFCC80;--acc1:#EF6C00;--acc2:#D81B60}
-body[data-tema-bulanan="07"]{--bg1:#EDE7F6;--bg2:#B39DDB;--acc1:#5E35B1;--acc2:#00897B}
-body[data-tema-bulanan="08"]{--bg1:#FCE4EC;--bg2:#F48FB1;--acc1:#D81B60;--acc2:#6A1B9A}
-body[data-tema-bulanan="09"]{--bg1:#E0F2F1;--bg2:#80CBC4;--acc1:#00796B;--acc2:#3949AB}
-body[data-tema-bulanan="10"]{--bg1:#FCE4EC;--bg2:#CE93D8;--acc1:#D81B60;--acc2:#6A1B9A}
-body[data-tema-bulanan="11"]{--bg1:#E3F2FD;--bg2:#B0BEC5;--acc1:#1565C0;--acc2:#546E7A}
-body[data-tema-bulanan="12"]{--bg1:#E8EAF6;--bg2:#B2DFDB;--acc1:#3949AB;--acc2:#00897B}
 body[data-tema="jiwoo"]{--bg1:#FFE0EC;--bg2:#FFB6C1;--acc1:#FF4081;--acc2:#F50057}
 body[data-tema="carmen"]{--bg1:#A5D6A7;--bg2:#43A047;--acc1:#2E7D32;--acc2:#1B5E20}
 body[data-tema="yuha"]{--bg1:#FFE4F0;--bg2:#FFB8D1;--acc1:#FF6FA5;--acc2:#E91E63}
@@ -338,7 +325,6 @@ button,.grid-item,.card-opt,.opt-item,.game-card,.gift-box{touch-action:manipula
 button:focus-visible,[role=button]:focus-visible,.grid-item:focus-visible,.card-opt:focus-visible{outline:3px solid #fff;outline-offset:3px}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;scroll-behavior:auto!important;transition-duration:.01ms!important}}
 @media(min-width:520px){.app{padding-left:20px;padding-right:20px}}
-
 
 </style>
 </head>
@@ -3177,26 +3163,6 @@ var DAFTAR_VIDEO_TERMUX = [
         "thumb": "h2h/yuha/3_thumb.jpg",
         "label": "Video Solo",
         "folder": "yuha"
-    },
-    {
-        "judul": "ICONIC HEART (Korean Ver.) MV",
-        "video": "online:iconic-heart-korean-ver",
-        "onlineUrl": "https://www.youtube.com/watch?v=chl0R8C4NJ8",
-        "thumb": "https://img.youtube.com/vi/chl0R8C4NJ8/hqdefault.jpg",
-        "label": "MV Resmi • Oktober 2026",
-        "folder": "official-mv",
-        "officialMV": true,
-        "bulanKatalog": "2026-10"
-    },
-    {
-        "judul": "Next Chapter MV",
-        "video": "online:next-chapter",
-        "onlineUrl": "https://www.youtube.com/watch?v=lu9GinsuyUQ",
-        "thumb": "https://img.youtube.com/vi/lu9GinsuyUQ/hqdefault.jpg",
-        "label": "MV Resmi • Oktober 2026",
-        "folder": "official-mv",
-        "officialMV": true,
-        "bulanKatalog": "2026-10"
     }
 ];
 
@@ -3350,42 +3316,37 @@ function buatSemuaThumbnail(){
     });
 }
 
-function bukaVideoOnline(url){
-    var safe=String(url||'');
-    // Hanya buka laman video di browser; URL web tidak pernah dimasukkan ke video.src.
-    if(!/^https:\/\/(www\.)?(youtube\.com|youtu\.be|instagram\.com)\//i.test(safe)){
-        toast('⚠️ Tautan video online tidak valid.'); return;
-    }
-    var win=window.open(safe,'_blank','noopener,noreferrer');
-    if(!win) window.location.href=safe;
-}
 function renderVideoGlobal() {
     var list = document.getElementById('videoGlobalList');
     if(!list) return;
+    
     var html = '';
-    SEMUA_VIDEO_GALERI = [];
+    SEMUA_VIDEO_GALERI = []; 
+    
     if(typeof DAFTAR_VIDEO_TERMUX === 'undefined' || DAFTAR_VIDEO_TERMUX.length === 0) {
         list.innerHTML = '<div class="info" style="text-align:center; grid-column: span 2;">Data video belum dimuat / kosong.</div>';
         return;
     }
+
     for(var i=0; i<DAFTAR_VIDEO_TERMUX.length; i++) {
         var v = DAFTAR_VIDEO_TERMUX[i];
-        var online=!!v.onlineUrl;
-        var src=String(v.video||'');
-        var thumb=online ? String(v.thumb||'') : '';
-        var clickAction=online ? "bukaVideoOnline('"+String(v.onlineUrl).replace(/\\/g,'\\\\').replace(/'/g,"\\'")+"')" :
-            "putarVideo('"+src.replace(/\\/g,'\\\\').replace(/'/g,"\\'")+"','"+captionVideo(v).replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/\r?\n/g,' ')+"')";
-        if(!online) SEMUA_VIDEO_GALERI.push(v.video);
-        // Feed video dibuat tanpa judul/caption; kartu hanya menampilkan thumbnail dan tombol putar.
-        html += '<div onclick="'+clickAction+'" aria-label="Putar video H2H" role="button" tabindex="0" style="position:relative; aspect-ratio:9/16; border-radius:16px; overflow:hidden; background:#222; border:2px solid rgba(255,255,255,0.4); cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.4);">' +
-            (online && thumb ? '<img src="'+amanTeks(thumb)+'" alt="Cuplikan MV resmi H2H" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;background:linear-gradient(145deg,#42245c,#e75a9b);">' :
-            '<img data-video-poster="'+amanTeks(v.video)+'" alt="Cuplikan video H2H" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">') +
-            '<div aria-hidden="true" style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; background:linear-gradient(to top,rgba(0,0,0,.16),transparent 45%);"><span style="display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:rgba(0,0,0,.48);border:1px solid rgba(255,255,255,.8);color:#fff;font-size:22px;padding-left:3px;">▶</span></div>' +
+        SEMUA_VIDEO_GALERI.push(v.video);
+        
+        html += '<div onclick="putarVideo(\'' + v.video + '\', \'' + captionVideo(v) + '\')" style="position:relative; aspect-ratio:9/16; border-radius:16px; overflow:hidden; background:#222; border:2px solid rgba(255,255,255,0.4); display:flex; flex-direction:column; justify-content:flex-end; cursor:pointer; box-shadow:0 4px 10px rgba(0,0,0,0.4);">' +
+            '<img data-video-poster="' + v.video + '" alt="Cuplikan ' + amanTeks(v.judul) + '" style="position:absolute; inset:0; width:100%; height:100%; object-fit:cover; pointer-events:none; background:linear-gradient(145deg,#42245c,#e75a9b);">' +
+            '<div style="position:absolute; inset:0; background:linear-gradient(to top, rgba(0,0,0,0.95) 0%, rgba(0,0,0,0.2) 40%, transparent 80%);"></div>' +
+            '<div style="position:relative; padding:15px 8px 12px; text-align:center; z-index:1;">' +
+                '<div style="font-size:14px; font-weight:900; color:#FFF; text-shadow:0 2px 4px rgba(0,0,0,1); margin-bottom:4px;">' + v.judul + '</div>' +
+                '<div style="font-size:11px; color:#FFF; font-weight:700; background:linear-gradient(135deg,#EC407A,#AB47BC); padding:3px 10px; border-radius:12px; display:inline-block; box-shadow:0 2px 5px rgba(0,0,0,0.5);">' + v.label + '</div>' +
+            '</div>' +
         '</div>';
     }
     list.innerHTML = html;
+    // Thumbnail harus diproses setelah kartu galeri selesai dibuat.
+    // Dipanggil di sini agar tetap jalan setiap galeri dirender ulang.
     requestAnimationFrame(function(){ buatSemuaThumbnail(); });
 }
+
 
 // ===== LOGIKA SWIPE VIDEO (TIKTOK STYLE) =====
 var touchStartY = 0;
@@ -3439,29 +3400,6 @@ document.addEventListener('DOMContentLoaded', setupSwipe);
 if(document.readyState === 'interactive' || document.readyState === 'complete') setupSwipe();
 
 // ===== INIT =====
-// Tema otomatis mengikuti bulan kalender. Hari ulang tahun member/anniversary tetap diprioritaskan.
-function terapkanTemaBulanan(date){
-    var d=date||new Date();
-    var bulan=String(d.getMonth()+1).padStart(2,'0');
-    var nama=['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'][d.getMonth()];
-    document.body.setAttribute('data-tema-bulanan',bulan);
-    document.body.setAttribute('data-label-tema-bulanan',nama);
-    return {bulan:bulan,nama:nama,kunci:d.getFullYear()+'-'+bulan};
-}
-function cekNotifikasiUpdateBulanan(date){
-    var d=date||new Date();
-    var info=terapkanTemaBulanan(d);
-    var key='bbmH2HUpdateNotice';
-    var last='';
-    try{last=localStorage.getItem(key)||'';}catch(e){}
-    if(last!==info.kunci){
-        // Notifikasi dalam aplikasi saat dibuka; bukan push notification di latar belakang.
-        setTimeout(function(){
-            if(typeof toast==='function') toast('🔔 Update bulanan BBM x H2H • '+info.nama+' '+d.getFullYear()+'! Tema bulan ini sudah aktif 💙');
-        },1200);
-        try{localStorage.setItem(key,info.kunci);}catch(e){}
-    }
-}
 function initApp(){
 
     cekResetKuota();
@@ -3479,8 +3417,6 @@ function initApp(){
     var rDate='';try{rDate=localStorage.getItem('rewardsDate')||'';}catch(e){}
     if(rDate!==today){saving=0;todayRewards={};try{localStorage.setItem('tabunganWaktu','0');localStorage.setItem('todayRewards','{}');localStorage.setItem('rewardsDate',today);}catch(e){}}
     var evHariIni=cekEventHariIni();
-    // Terapkan tema kalender dan cek notifikasi setiap bulan; tema ulang tahun tetap menang melalui aturan CSS member.
-    cekNotifikasiUpdateBulanan(now);
     if(evHariIni.length>0){
         var ev=evHariIni[0];
         if(ev.type==='member'){birthdayMember=ev.id;lockedTheme=ev.id;document.body.setAttribute('data-tema',ev.id);try{localStorage.setItem('temaH2H',ev.id);}catch(err){}}
