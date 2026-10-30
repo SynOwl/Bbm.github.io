@@ -1,11 +1,11 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-10-29",
+  "updatedAt": "2026-10-31",
   "policy": "Only MP4 files authorized for playback should be listed here. Update this catalog to refresh the BBM video gallery after reload.",
   "videos": [
     {
       "judul": "MV 2",
-      "video": "h2h/mv2.mp4",
+      "video": "https://res.cloudinary.com/cxcdyt72/video/upload/v1793381936/mv2.mp4",
       "thumb": "h2h/mv2_thumb.jpg",
       "label": "Video Global",
       "folder": "h2h"
