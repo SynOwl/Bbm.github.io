@@ -726,7 +726,7 @@ button:focus-visible,[role=button]:focus-visible,.grid-item:focus-visible,.card-
 </div>
 
 <div id="videoModal" class="ig-reels-modal">
-    <video id="videoPlayer" loop playsinline onclick="togglePlayPause()"></video>
+    <video id="videoPlayer" autoplay loop playsinline preload="auto" onclick="togglePlayPause()"></video>
     <iframe id="youtubePlayer" title="Pemutar YouTube H2H" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen playsinline style="display:none;position:absolute;inset:0;width:100%;height:100%;border:0;background:#000;z-index:1;"></iframe>
     
     <div class="ig-reels-ui">
@@ -2427,22 +2427,40 @@ function simpanBlobVideoOffline(src, record) {
         });
     });
 }
+function jalankanPemutar(player) {
+    if (!player) return;
+    player.autoplay = true;
+    player.loop = true;
+    player.playsInline = true;
+    player.muted = false;
+    var p = player.play();
+    if (p && p.catch) p.catch(function() {
+        // Android/WebView dapat menolak autoplay bersuara sampai ada interaksi pengguna.
+        player.dataset.perluAktivasiSuara = '1';
+    });
+}
 function aturSumberPemutar(src, player) {
     var token = ++videoLoadToken;
+    if (!player) return;
+    player.pause();
+    player.autoplay = true;
+    player.loop = true;
+    player.playsInline = true;
+    player.muted = false;
+    // Mulai dari URL langsung saat ketukan pengguna masih menjadi aktivasi media.
+    player.src = src;
+    player.load();
+    jalankanPemutar(player);
     if (currentVideoObjectUrl) { URL.revokeObjectURL(currentVideoObjectUrl); currentVideoObjectUrl = ''; }
+    // Jika video sudah tersimpan offline, ganti sumber ke Blob lokal.
     ambilVideoOffline(src).then(function(record) {
-        if (token !== videoLoadToken || !player) return;
-        player.src = record && record.blob ? (currentVideoObjectUrl = URL.createObjectURL(record.blob)) : src;
+        if (token !== videoLoadToken || !player || !record || !record.blob) return;
+        player.pause();
+        currentVideoObjectUrl = URL.createObjectURL(record.blob);
+        player.src = currentVideoObjectUrl;
         player.load();
-        var p = player.play();
-        if (p && p.catch) p.catch(function(){});
-    }).catch(function() {
-        if (token !== videoLoadToken || !player) return;
-        player.src = src;
-        player.load();
-        var p = player.play();
-        if (p && p.catch) p.catch(function(){});
-    });
+        jalankanPemutar(player);
+    }).catch(function(){ /* Sumber online tetap dipakai jika database offline gagal dibaca. */ });
 }
 function putarVideo(src, caption) {
     currentVideoSrc = src;
@@ -3407,22 +3425,26 @@ function renderVideoGlobal() {
 // ===== LOGIKA SWIPE VIDEO (TIKTOK STYLE) =====
 var touchStartY = 0;
 var touchEndY = 0;
+var swipeDiizinkan = false;
 function setupSwipe() {
     var modal = document.getElementById('videoModal');
-    if(!modal) return;
+    if(!modal || modal.dataset.swipeReady) return;
+    modal.dataset.swipeReady = '1';
     modal.addEventListener('touchstart', function(e) {
+        var target = e.target;
+        swipeDiizinkan = !!(target && (target.id === 'videoPlayer' || target.closest && target.closest('#videoPlayer')));
+        if (!swipeDiizinkan || e.touches.length !== 1) return;
         touchStartY = e.changedTouches[0].screenY;
     }, {passive: true});
-    
     modal.addEventListener('touchend', function(e) {
+        if (!swipeDiizinkan) return;
+        swipeDiizinkan = false;
         touchEndY = e.changedTouches[0].screenY;
         var diff = touchStartY - touchEndY;
-        if (diff > 80) { 
-            putarVideoBerikutnya(); 
-        } else if (diff < -80) { 
-            putarVideoSebelumnya(); 
-        }
+        if (diff > 75) putarVideoBerikutnya();
+        else if (diff < -75) putarVideoSebelumnya();
     }, {passive: true});
+    modal.addEventListener('touchcancel', function(){ swipeDiizinkan = false; }, {passive: true});
 }
 
 function putarVideoBerikutnya() {
