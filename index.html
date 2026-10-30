@@ -3453,16 +3453,26 @@ document.addEventListener('DOMContentLoaded', setupSwipe);
 if(document.readyState === 'interactive' || document.readyState === 'complete') setupSwipe();
 
 // ===== INIT =====
+function alamatMediaValid(url, ekstensi) {
+    if (typeof url !== 'string' || !url.trim()) return false;
+    var nilai = url.trim();
+    if (!new RegExp('\\.' + ekstensi + '(?:$|[?#])', 'i').test(nilai)) return false;
+    // File lokal relatif tetap didukung; media server wajib memakai HTTPS.
+    if (/^https:\/\//i.test(nilai)) return true;
+    if (/^http:\/\//i.test(nilai) || /^\/\//.test(nilai) || /^[a-z][a-z0-9+.-]*:/i.test(nilai)) return false;
+    return true;
+}
 function muatKatalogVideoOtomatis() {
-    // Katalog MP4 diperbarui terpisah; reload cukup, APK tidak perlu dipasang ulang.
+    // Katalog dapat menunjuk file lokal atau MP4 HTTPS di penyimpanan online.
     fetch('data/video-catalog.json', {cache:'no-store'})
         .then(function(r) { if (!r.ok) throw new Error('Katalog MP4 belum tersedia'); return r.json(); })
         .then(function(data) {
             if (!data || !Array.isArray(data.videos)) return;
             var daftar = data.videos.filter(function(v) {
-                return v && v.judul && typeof v.video === 'string' && /\.mp4(?:$|[?#])/i.test(v.video) && !/^https?:\/\//i.test(v.video);
+                return v && v.judul && alamatMediaValid(v.video, 'mp4');
             }).map(function(v) {
-                return {judul:v.judul, video:v.video, thumb:v.thumb || '', label:v.label || 'Video MP4', folder:v.folder || 'h2h'};
+                var thumbValid = alamatMediaValid(v.thumb, 'jpg') || alamatMediaValid(v.thumb, 'png') || alamatMediaValid(v.thumb, 'webp');
+                return {judul:v.judul, video:v.video.trim(), thumb:thumbValid ? v.thumb : '', label:v.label || 'Video MP4', folder:v.folder || 'h2h'};
             });
             if (!daftar.length) return;
             DAFTAR_VIDEO_TERMUX = daftar;
