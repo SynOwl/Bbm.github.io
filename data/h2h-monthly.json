@@ -1,12 +1,39 @@
 {
   "schemaVersion": 2,
   "month": "2026-10",
-  "updatedAt": "2026-10-30T08:44:52.980577+00:00",
+  "updatedAt": "2026-10-31T08:31:28.213309+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "AMXIyyyiBv8",
+      "title": "we on a moonride 🌕 #Hearts2Hearts #하츠투하츠 #H2H #IAN #이안",
+      "type": "youtube",
+      "published": "2026-10-31T04:00:13+00:00",
+      "url": "https://www.youtube.com/watch?v=AMXIyyyiBv8",
+      "thumbnail": "https://img.youtube.com/vi/AMXIyyyiBv8/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "TTT-eWm5SRs",
+      "title": "gotta serve the face first #Hearts2Hearts #하츠투하츠 #H2H",
+      "type": "youtube",
+      "published": "2026-10-30T13:00:34+00:00",
+      "url": "https://www.youtube.com/watch?v=TTT-eWm5SRs",
+      "thumbnail": "https://img.youtube.com/vi/TTT-eWm5SRs/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "kmg3SEosPAs",
+      "title": "Our Little Night Out in Hong Kong౨ৎ⋆｡˚Dinner with a View&A Ferris Wheel Ride🎡 S2cret Diary ꒰ EP.11 ꒱",
+      "type": "youtube",
+      "published": "2026-10-30T11:00:21+00:00",
+      "url": "https://www.youtube.com/watch?v=kmg3SEosPAs",
+      "thumbnail": "https://img.youtube.com/vi/kmg3SEosPAs/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "qwzdHudtTC0",
       "title": "thumbs up if u like it #Hearts2Hearts #하츠투하츠 #YUHA #A_NA #YE_ON",
