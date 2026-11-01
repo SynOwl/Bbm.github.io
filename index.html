@@ -1985,7 +1985,7 @@ function renderMapel() {
     var bannerWrap = document.getElementById('bannerMapelWrap');
     if(!list) return;
     var html = '';
-    var todaySunday = isHariMinggu();
+    var todaySunday = isHariMinggu() && currentHari !== 'Kegiatan Gereja';
     var mingguIniBelumDitutup = (mingguSudahDitutup !== getTanggalMingguTerakhir());
     var menunggu = localStorage.getItem('menungguSoal') === 'true';
     var waktuBatas = parseInt(localStorage.getItem('waktuBatasTunggu') || '0', 10);
