@@ -1,12 +1,30 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-02T09:37:50.106764+00:00",
+  "updatedAt": "2026-11-03T09:41:08.773785+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "KLUCXIGvx0c",
+      "title": "summer daydream ♾️ #Hearts2Hearts #하츠투하츠#ICONICHEART #Hearts2Hearts_ICONICHEART",
+      "type": "youtube",
+      "published": "2026-11-03T08:30:03+00:00",
+      "url": "https://www.youtube.com/watch?v=KLUCXIGvx0c",
+      "thumbnail": "https://img.youtube.com/vi/KLUCXIGvx0c/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "nl-YbxNFlGk",
+      "title": "너 어디야 #whatsinmydrafts",
+      "type": "youtube",
+      "published": "2026-11-02T10:30:10+00:00",
+      "url": "https://www.youtube.com/watch?v=nl-YbxNFlGk",
+      "thumbnail": "https://img.youtube.com/vi/nl-YbxNFlGk/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "JThbuvI7HMo",
       "title": "take the backseat #Hearts2Hearts #하츠투하츠 #H2H #CARMEN #STELLA",
