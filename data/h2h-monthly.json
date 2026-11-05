@@ -1,12 +1,30 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-04T09:27:21.880040+00:00",
+  "updatedAt": "2026-11-05T09:37:23.637619+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "TgxtTjOCK3I",
+      "title": "daily routine",
+      "type": "youtube",
+      "published": "2026-11-04T11:30:01+00:00",
+      "url": "https://www.youtube.com/watch?v=TgxtTjOCK3I",
+      "thumbnail": "https://img.youtube.com/vi/TgxtTjOCK3I/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "2ISiz1gSCvQ",
+      "title": "it's basically christmas already",
+      "type": "youtube",
+      "published": "2026-11-04T10:30:28+00:00",
+      "url": "https://www.youtube.com/watch?v=2ISiz1gSCvQ",
+      "thumbnail": "https://img.youtube.com/vi/2ISiz1gSCvQ/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "KLUCXIGvx0c",
       "title": "summer daydream ♾️ #Hearts2Hearts #하츠투하츠#ICONICHEART #Hearts2Hearts_ICONICHEART",
