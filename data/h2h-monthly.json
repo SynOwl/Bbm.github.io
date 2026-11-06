@@ -1,12 +1,30 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-05T09:37:23.637619+00:00",
+  "updatedAt": "2026-11-06T09:30:00.943201+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "zOz1XKXgy5k",
+      "title": "backseat 꽉 찼다 #Hearts2Hearts #하츠투하츠 #NCTDREAM @NCTDREAM  #Moonride #Hearts2Hearts_Moonride",
+      "type": "youtube",
+      "published": "2026-11-06T03:00:26+00:00",
+      "url": "https://www.youtube.com/watch?v=zOz1XKXgy5k",
+      "thumbnail": "https://img.youtube.com/vi/zOz1XKXgy5k/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "EwZosfbK5Ec",
+      "title": "XOXO, GOS2IP GIRL",
+      "type": "youtube",
+      "published": "2026-11-05T11:00:08+00:00",
+      "url": "https://www.youtube.com/watch?v=EwZosfbK5Ec",
+      "thumbnail": "https://img.youtube.com/vi/EwZosfbK5Ec/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "TgxtTjOCK3I",
       "title": "daily routine",
