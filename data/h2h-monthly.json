@@ -1,12 +1,21 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-06T09:30:00.943201+00:00",
+  "updatedAt": "2026-11-07T08:54:37.576343+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "S7R46oVu-iA",
+      "title": "repeat after me! #whatsinmydrafts",
+      "type": "youtube",
+      "published": "2026-11-07T08:30:29+00:00",
+      "url": "https://www.youtube.com/watch?v=S7R46oVu-iA",
+      "thumbnail": "https://img.youtube.com/vi/S7R46oVu-iA/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "zOz1XKXgy5k",
       "title": "backseat 꽉 찼다 #Hearts2Hearts #하츠투하츠 #NCTDREAM @NCTDREAM  #Moonride #Hearts2Hearts_Moonride",
