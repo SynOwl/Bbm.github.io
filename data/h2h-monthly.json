@@ -1,12 +1,30 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-08T09:08:47.612226+00:00",
+  "updatedAt": "2026-11-09T09:55:12.247437+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "GMG12fhsNH0",
+      "title": "love me?# Hearts2Hearts #하츠투하츠 #STELLA #JUUN #A_NA",
+      "type": "youtube",
+      "published": "2026-11-09T08:01:22+00:00",
+      "url": "https://www.youtube.com/watch?v=GMG12fhsNH0",
+      "thumbnail": "https://img.youtube.com/vi/GMG12fhsNH0/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "F0_J7lqVGV4",
+      "title": "BEYOND YOUR EXPECTATIONS#Hearts2Hearts #하츠투하츠 #H2H",
+      "type": "youtube",
+      "published": "2026-11-08T13:00:30+00:00",
+      "url": "https://www.youtube.com/watch?v=F0_J7lqVGV4",
+      "thumbnail": "https://img.youtube.com/vi/F0_J7lqVGV4/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "S7R46oVu-iA",
       "title": "repeat after me! #whatsinmydrafts",
