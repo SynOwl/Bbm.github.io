@@ -1,12 +1,39 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-09T09:55:12.247437+00:00",
+  "updatedAt": "2026-11-10T09:59:28.680462+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "1e7cAWYFAwg",
+      "title": "jealous much? #Hearts2Hearts #하츠투하츠 #JIWOO #A_NA #YE_ON",
+      "type": "youtube",
+      "published": "2026-11-10T08:00:20+00:00",
+      "url": "https://www.youtube.com/watch?v=1e7cAWYFAwg",
+      "thumbnail": "https://img.youtube.com/vi/1e7cAWYFAwg/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "GWyItlPPNAI",
+      "title": "나 달라진 거 없어? #Hearts2Hearts #하츠투하츠 #H2H #YUHA #유하",
+      "type": "youtube",
+      "published": "2026-11-09T12:30:24+00:00",
+      "url": "https://www.youtube.com/watch?v=GWyItlPPNAI",
+      "thumbnail": "https://img.youtube.com/vi/GWyItlPPNAI/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "644Cy2a1apA",
+      "title": "나에게 이런 동생이? 부럽죠?! ദ്ദി ˉ͈̀꒳ˉ͈́ ) | Hearts2Hearts 하츠투하츠 'ICONIC HEART' Music Show BH2ND",
+      "type": "youtube",
+      "published": "2026-11-09T11:00:35+00:00",
+      "url": "https://www.youtube.com/watch?v=644Cy2a1apA",
+      "thumbnail": "https://img.youtube.com/vi/644Cy2a1apA/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "GMG12fhsNH0",
       "title": "love me?# Hearts2Hearts #하츠투하츠 #STELLA #JUUN #A_NA",
