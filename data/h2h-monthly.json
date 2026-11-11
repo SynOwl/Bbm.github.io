@@ -1,12 +1,30 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-10T09:59:28.680462+00:00",
+  "updatedAt": "2026-11-11T09:34:10.222331+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "FqpYYVcTRWY",
+      "title": "we been alright #Hearts2Hearts #하츠투하츠  #H2H #JUUN #IAN",
+      "type": "youtube",
+      "published": "2026-11-11T08:00:25+00:00",
+      "url": "https://www.youtube.com/watch?v=FqpYYVcTRWY",
+      "thumbnail": "https://img.youtube.com/vi/FqpYYVcTRWY/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "_cw7q5gkOCE",
+      "title": "no charlie, but angels #Hearts2Hearts #하츠투하츠 #CARMEN #YUHA #STELLA",
+      "type": "youtube",
+      "published": "2026-11-10T12:30:10+00:00",
+      "url": "https://www.youtube.com/watch?v=_cw7q5gkOCE",
+      "thumbnail": "https://img.youtube.com/vi/_cw7q5gkOCE/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "1e7cAWYFAwg",
       "title": "jealous much? #Hearts2Hearts #하츠투하츠 #JIWOO #A_NA #YE_ON",
@@ -36,7 +54,7 @@
     },
     {
       "id": "GMG12fhsNH0",
-      "title": "love me?# Hearts2Hearts #하츠투하츠 #STELLA #JUUN #A_NA",
+      "title": "love me? #Hearts2Hearts #하츠투하츠 #STELLA #JUUN #A_NA",
       "type": "youtube",
       "published": "2026-11-09T08:01:22+00:00",
       "url": "https://www.youtube.com/watch?v=GMG12fhsNH0",
@@ -45,7 +63,7 @@
     },
     {
       "id": "F0_J7lqVGV4",
-      "title": "BEYOND YOUR EXPECTATIONS#Hearts2Hearts #하츠투하츠 #H2H",
+      "title": "BEYOND YOUR EXPECTATIONS #Hearts2Hearts #하츠투하츠 #H2H",
       "type": "youtube",
       "published": "2026-11-08T13:00:30+00:00",
       "url": "https://www.youtube.com/watch?v=F0_J7lqVGV4",
