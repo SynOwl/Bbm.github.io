@@ -1,12 +1,30 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-11T09:34:10.222331+00:00",
+  "updatedAt": "2026-11-12T09:56:11.402122+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "qorvG8TYFL8",
+      "title": "meowㅋㅋ #Hearts2Hearts #하츠투하츠 #H2H #STELLA #스텔라",
+      "type": "youtube",
+      "published": "2026-11-11T12:00:07+00:00",
+      "url": "https://www.youtube.com/watch?v=qorvG8TYFL8",
+      "thumbnail": "https://img.youtube.com/vi/qorvG8TYFL8/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "yKsGhsb97u4",
+      "title": "제1회 하투하 볼링대회 : 일본 편의점 내기🎳",
+      "type": "youtube",
+      "published": "2026-11-11T11:00:29+00:00",
+      "url": "https://www.youtube.com/watch?v=yKsGhsb97u4",
+      "thumbnail": "https://img.youtube.com/vi/yKsGhsb97u4/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "FqpYYVcTRWY",
       "title": "we been alright #Hearts2Hearts #하츠투하츠  #H2H #JUUN #IAN",
