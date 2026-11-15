@@ -1,12 +1,39 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-14T09:04:54.328504+00:00",
+  "updatedAt": "2026-11-15T09:35:44.310015+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "twMgH_pK-S8",
+      "title": "AND YOU THE BEST✨🫰 #Hearts2Hearts #하츠투하츠 #H2H  #MMA2026 #멜론뮤직어워드",
+      "type": "youtube",
+      "published": "2026-11-14T14:48:11+00:00",
+      "url": "https://www.youtube.com/watch?v=twMgH_pK-S8",
+      "thumbnail": "https://img.youtube.com/vi/twMgH_pK-S8/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "NTawS5k4Wzg",
+      "title": "for MMA #Hearts2Hearts #하츠투하츠 #H2H #MMA2026 #멜론뮤직어워드",
+      "type": "youtube",
+      "published": "2026-11-14T14:10:05+00:00",
+      "url": "https://www.youtube.com/watch?v=NTawS5k4Wzg",
+      "thumbnail": "https://img.youtube.com/vi/NTawS5k4Wzg/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "7HgHpGrUJB8",
+      "title": "Hearts2Hearts 하츠투하츠 'Intro + 15-LOVE + Dance Break (2026 MMA Ver.)' Performance Practice",
+      "type": "youtube",
+      "published": "2026-11-14T14:00:00+00:00",
+      "url": "https://www.youtube.com/watch?v=7HgHpGrUJB8",
+      "thumbnail": "https://img.youtube.com/vi/7HgHpGrUJB8/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "OSs7tSLzIRY",
       "title": "우리 연기 안 되겠는데…? (´•ω•`; ) | Hearts2Hearts 하츠투하츠 ‘ICONIC HEART’ Promotion Event in Japan BH2ND #3",
