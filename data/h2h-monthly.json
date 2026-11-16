@@ -1,12 +1,39 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-15T09:35:44.310015+00:00",
+  "updatedAt": "2026-11-16T09:53:31.813403+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "Te14NdT14i8",
+      "title": "私は☆ #Hearts2Hearts #하츠투하츠 #H2H #JIWOO #JUUN",
+      "type": "youtube",
+      "published": "2026-11-16T09:30:01+00:00",
+      "url": "https://www.youtube.com/watch?v=Te14NdT14i8",
+      "thumbnail": "https://img.youtube.com/vi/Te14NdT14i8/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "VWaj6xPHo1M",
+      "title": "いいじゃん🖤 #Hearts2Hearts #하츠투하츠 #H2H #JUUN #주은",
+      "type": "youtube",
+      "published": "2026-11-15T13:00:39+00:00",
+      "url": "https://www.youtube.com/watch?v=VWaj6xPHo1M",
+      "thumbnail": "https://img.youtube.com/vi/VWaj6xPHo1M/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "qgIoCF9BVdY",
+      "title": "닿을 듯 말 듯 👀 #Hearts2Hearts #하츠투하츠 #H2H #JIWOO #YUHA",
+      "type": "youtube",
+      "published": "2026-11-15T12:00:03+00:00",
+      "url": "https://www.youtube.com/watch?v=qgIoCF9BVdY",
+      "thumbnail": "https://img.youtube.com/vi/qgIoCF9BVdY/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "twMgH_pK-S8",
       "title": "AND YOU THE BEST✨🫰 #Hearts2Hearts #하츠투하츠 #H2H  #MMA2026 #멜론뮤직어워드",
