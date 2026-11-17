@@ -1,12 +1,48 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-16T09:53:31.813403+00:00",
+  "updatedAt": "2026-11-17T10:50:11.353844+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "ZnKKZZjOBUA",
+      "title": "🌸🍒　#Hearts2Hearts #하츠투하츠 #H2H #YUHA #유하",
+      "type": "youtube",
+      "published": "2026-11-17T10:30:39+00:00",
+      "url": "https://www.youtube.com/watch?v=ZnKKZZjOBUA",
+      "thumbnail": "https://img.youtube.com/vi/ZnKKZZjOBUA/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "d3lDJZPzuIs",
+      "title": "もしもし ♡ #Hearts2Hearts #하츠투하츠 #H2H #YE_ON #예온",
+      "type": "youtube",
+      "published": "2026-11-17T09:30:34+00:00",
+      "url": "https://www.youtube.com/watch?v=d3lDJZPzuIs",
+      "thumbnail": "https://img.youtube.com/vi/d3lDJZPzuIs/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "NIVIoNmurJs",
+      "title": "저를 딸로 받아주신다고요?(σ̴̶̷  ̫σ̴̶̷ )✧ | Hearts2Hearts 하츠투하츠 ‘ICONIC HEART’ Promotion Event in Japan BH2ND #4",
+      "type": "youtube",
+      "published": "2026-11-16T11:00:02+00:00",
+      "url": "https://www.youtube.com/watch?v=NIVIoNmurJs",
+      "thumbnail": "https://img.youtube.com/vi/NIVIoNmurJs/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "u-0J0GgFQTA",
+      "title": "누가 제일 멋져?ㅋ #Hearts2Hearts #하츠투하츠 #STELLA #JUUN #A_NA",
+      "type": "youtube",
+      "published": "2026-11-16T10:30:16+00:00",
+      "url": "https://www.youtube.com/watch?v=u-0J0GgFQTA",
+      "thumbnail": "https://img.youtube.com/vi/u-0J0GgFQTA/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "Te14NdT14i8",
       "title": "私は☆ #Hearts2Hearts #하츠투하츠 #H2H #JIWOO #JUUN",
