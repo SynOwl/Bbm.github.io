@@ -1,12 +1,21 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-17T10:50:11.353844+00:00",
+  "updatedAt": "2026-11-18T10:19:09.727409+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "-ahLqJOaGzU",
+      "title": "究極のアイドル ! #Hearts2Hearts #하츠투하츠 #H2H #IAN #이안",
+      "type": "youtube",
+      "published": "2026-11-18T09:30:12+00:00",
+      "url": "https://www.youtube.com/watch?v=-ahLqJOaGzU",
+      "thumbnail": "https://img.youtube.com/vi/-ahLqJOaGzU/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "ZnKKZZjOBUA",
       "title": "🌸🍒　#Hearts2Hearts #하츠투하츠 #H2H #YUHA #유하",
