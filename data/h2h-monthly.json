@@ -1,12 +1,39 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-18T10:19:09.727409+00:00",
+  "updatedAt": "2026-11-19T10:29:07.741509+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "iW26ZSbEG5c",
+      "title": "did you understand desuka? #Hearts2Hearts #하츠투하츠 #H2H #CARMEN #STELLA",
+      "type": "youtube",
+      "published": "2026-11-19T09:30:05+00:00",
+      "url": "https://www.youtube.com/watch?v=iW26ZSbEG5c",
+      "thumbnail": "https://img.youtube.com/vi/iW26ZSbEG5c/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "d0ezHRmyHXw",
+      "title": "wanna join? #Hearts2Hearts #하츠투하츠 #H2H#CandyBoxLover #Hearts2Hearts_CandyBoxLover",
+      "type": "youtube",
+      "published": "2026-11-18T12:30:13+00:00",
+      "url": "https://www.youtube.com/watch?v=d0ezHRmyHXw",
+      "thumbnail": "https://img.youtube.com/vi/d0ezHRmyHXw/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "dpFHltHEPn0",
+      "title": "i get obsessed #Hearts2Hearts #하츠투하츠 #H2H #JIWOO #YUHA",
+      "type": "youtube",
+      "published": "2026-11-18T10:30:07+00:00",
+      "url": "https://www.youtube.com/watch?v=dpFHltHEPn0",
+      "thumbnail": "https://img.youtube.com/vi/dpFHltHEPn0/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "-ahLqJOaGzU",
       "title": "究極のアイドル ! #Hearts2Hearts #하츠투하츠 #H2H #IAN #이안",
