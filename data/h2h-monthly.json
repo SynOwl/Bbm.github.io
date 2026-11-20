@@ -1,12 +1,30 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-19T10:29:07.741509+00:00",
+  "updatedAt": "2026-11-20T10:09:35.764551+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "yRwImzwPuuA",
+      "title": "이 영상 10번 넘게 보시면? 꿈에서 이 사람(?)이 나올 거예요ʚɞ | Hearts2Hearts 하츠투하츠 'Next Chapter’ MV BH2ND",
+      "type": "mv",
+      "published": "2026-11-19T11:00:00+00:00",
+      "url": "https://www.youtube.com/watch?v=yRwImzwPuuA",
+      "thumbnail": "https://img.youtube.com/vi/yRwImzwPuuA/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "_gOTUebsnUg",
+      "title": "자작곡 #Hearts2Hearts #하츠투하츠 #H2H #IAN #이안",
+      "type": "youtube",
+      "published": "2026-11-19T10:30:31+00:00",
+      "url": "https://www.youtube.com/watch?v=_gOTUebsnUg",
+      "thumbnail": "https://img.youtube.com/vi/_gOTUebsnUg/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "iW26ZSbEG5c",
       "title": "did you understand desuka? #Hearts2Hearts #하츠투하츠 #H2H #CARMEN #STELLA",
