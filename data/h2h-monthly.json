@@ -1,12 +1,66 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-20T10:09:35.764551+00:00",
+  "updatedAt": "2026-11-21T09:56:50.652177+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "sjWBG844WGU",
+      "title": "not exactly but.. #Hearts2Hearts #하츠투하츠 #H2H#CandyBoxLover #Hearts2Hearts_CandyBoxLover",
+      "type": "youtube",
+      "published": "2026-11-21T04:30:01+00:00",
+      "url": "https://www.youtube.com/watch?v=sjWBG844WGU",
+      "thumbnail": "https://img.youtube.com/vi/sjWBG844WGU/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "H61xjsPAjLs",
+      "title": "how to pop pop poppin’ #Hearts2Hearts #하츠투하츠 #H2H#CandyBoxLover #Hearts2Hearts_CandyBoxLover",
+      "type": "youtube",
+      "published": "2026-11-21T03:30:33+00:00",
+      "url": "https://www.youtube.com/watch?v=H61xjsPAjLs",
+      "thumbnail": "https://img.youtube.com/vi/H61xjsPAjLs/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "rzFp-zIzSAw",
+      "title": "print(\"thank you S2U🏆\") #Hearts2Hearts #하츠투하츠 #H2H #MAMAAWARDS #2026MAMAAWARDS",
+      "type": "youtube",
+      "published": "2026-11-20T14:10:17+00:00",
+      "url": "https://www.youtube.com/watch?v=rzFp-zIzSAw",
+      "thumbnail": "https://img.youtube.com/vi/rzFp-zIzSAw/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "XKo65ZqapTU",
+      "title": "Hearts2Hearts 하츠투하츠 'Intro + ICONIC HEART + Dance Break (2026 MAMA Ver.)' Performance Practice",
+      "type": "youtube",
+      "published": "2026-11-20T14:00:24+00:00",
+      "url": "https://www.youtube.com/watch?v=XKo65ZqapTU",
+      "thumbnail": "https://img.youtube.com/vi/XKo65ZqapTU/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "cHgYaKdIAws",
+      "title": "back to the keys 🎹 #Hearts2Hearts #하츠투하츠 #H2H#YUHA #유하",
+      "type": "youtube",
+      "published": "2026-11-20T13:30:22+00:00",
+      "url": "https://www.youtube.com/watch?v=cHgYaKdIAws",
+      "thumbnail": "https://img.youtube.com/vi/cHgYaKdIAws/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "zfky3wm_K5A",
+      "title": "돌격 하투하 at MAMA #Hearts2Hearts #하츠투하츠 #H2H",
+      "type": "youtube",
+      "published": "2026-11-20T13:03:25+00:00",
+      "url": "https://www.youtube.com/watch?v=zfky3wm_K5A",
+      "thumbnail": "https://img.youtube.com/vi/zfky3wm_K5A/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "yRwImzwPuuA",
       "title": "이 영상 10번 넘게 보시면? 꿈에서 이 사람(?)이 나올 거예요ʚɞ | Hearts2Hearts 하츠투하츠 'Next Chapter’ MV BH2ND",
