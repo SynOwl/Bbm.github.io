@@ -1,12 +1,48 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-21T09:56:50.652177+00:00",
+  "updatedAt": "2026-11-22T09:53:55.427386+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "f8HMEeeCriU",
+      "title": "아니 걸으라매 #Hearts2Hearts #하츠투하츠 #H2H #YUHA #A_NA",
+      "type": "youtube",
+      "published": "2026-11-22T06:30:22+00:00",
+      "url": "https://www.youtube.com/watch?v=f8HMEeeCriU",
+      "thumbnail": "https://img.youtube.com/vi/f8HMEeeCriU/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "cmSqOpYuFHg",
+      "title": "describing me? #Hearts2Hearts #하츠투하츠 #H2H #CARMEN #카르멘",
+      "type": "youtube",
+      "published": "2026-11-22T03:30:24+00:00",
+      "url": "https://www.youtube.com/watch?v=cmSqOpYuFHg",
+      "thumbnail": "https://img.youtube.com/vi/cmSqOpYuFHg/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "8L63OqeO_M8",
+      "title": "잘 놀았다 #whatsinmydrafts",
+      "type": "youtube",
+      "published": "2026-11-21T12:00:37+00:00",
+      "url": "https://www.youtube.com/watch?v=8L63OqeO_M8",
+      "thumbnail": "https://img.youtube.com/vi/8L63OqeO_M8/hqdefault.jpg",
+      "source": "youtube-official"
+    },
+    {
+      "id": "QkglQRtsXCE",
+      "title": "[vlog] 제주부터 강원도까지 먹방 브이로그🍴 (With 에이나, 예온)ㅣ제주도 여행・수영장 달리기・흑돼지 먹방・속초에서 물회 한 그릇・행복해지는 소원빌기ㅣ어느 주은 날 EP.2",
+      "type": "youtube",
+      "published": "2026-11-21T11:00:30+00:00",
+      "url": "https://www.youtube.com/watch?v=QkglQRtsXCE",
+      "thumbnail": "https://img.youtube.com/vi/QkglQRtsXCE/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "sjWBG844WGU",
       "title": "not exactly but.. #Hearts2Hearts #하츠투하츠 #H2H#CandyBoxLover #Hearts2Hearts_CandyBoxLover",
