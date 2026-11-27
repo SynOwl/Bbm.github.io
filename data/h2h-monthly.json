@@ -1,12 +1,21 @@
 {
   "schemaVersion": 2,
   "month": "2026-11",
-  "updatedAt": "2026-11-26T11:02:16.409936+00:00",
+  "updatedAt": "2026-11-27T10:59:27.854442+00:00",
   "source": {
     "youtube": "https://www.youtube.com/@hearts2hearts.official"
   },
   "collectionPolicy": "All official YouTube uploads from the current month; previous month's collection is replaced.",
   "videos": [
+    {
+      "id": "RIZMBX8F07A",
+      "title": "너랑ㅎㅎ #Hearts2Hearts #하츠투하츠 #H2H #JIWOO #JUUN",
+      "type": "youtube",
+      "published": "2026-11-26T12:30:26+00:00",
+      "url": "https://www.youtube.com/watch?v=RIZMBX8F07A",
+      "thumbnail": "https://img.youtube.com/vi/RIZMBX8F07A/hqdefault.jpg",
+      "source": "youtube-official"
+    },
     {
       "id": "LggaG2xwBAY",
       "title": "아진짜 #Hearts2Hearts #하츠투하츠 #H2H #A_NA #에이나",
